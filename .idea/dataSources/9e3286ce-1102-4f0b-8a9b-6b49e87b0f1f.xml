@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="@localhost">
+  <database-model serializer="dbm" rdbms="ORACLE" format-version="4.0">
+    <root id="1"/>
+    <schema id="2" parent="1" name="LSC">
+      <ObjectId>86</ObjectId>
+      <IntrospectionTimestamp>2016-12-27.22:21:39</IntrospectionTimestamp>
+      <CreatedTimestamp>2016-12-18.22:16:57</CreatedTimestamp>
+      <ModifiedTimestamp>2016-12-27.22:21:39</ModifiedTimestamp>
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="PUBLIC">
+      <ObjectId>1</ObjectId>
+    </schema>
+    <schema id="4" parent="1" name="SYS">
+      <ObjectId>0</ObjectId>
+    </schema>
+    <schema id="5" parent="1" name="SYSTEM">
+      <ObjectId>5</ObjectId>
+    </schema>
+    <schema id="6" parent="1" name="OUTLN">
+      <ObjectId>9</ObjectId>
+    </schema>
+    <schema id="7" parent="1" name="DIP">
+      <ObjectId>14</ObjectId>
+    </schema>
+    <schema id="8" parent="1" name="ORACLE_OCM">
+      <ObjectId>21</ObjectId>
+    </schema>
+    <schema id="9" parent="1" name="DBSNMP">
+      <ObjectId>30</ObjectId>
+    </schema>
+    <schema id="10" parent="1" name="APPQOSSYS">
+      <ObjectId>31</ObjectId>
+    </schema>
+    <schema id="11" parent="1" name="WMSYS">
+      <ObjectId>32</ObjectId>
+    </schema>
+    <schema id="12" parent="1" name="EXFSYS">
+      <ObjectId>42</ObjectId>
+    </schema>
+    <schema id="13" parent="1" name="CTXSYS">
+      <ObjectId>43</ObjectId>
+    </schema>
+    <schema id="14" parent="1" name="XDB">
+      <ObjectId>45</ObjectId>
+    </schema>
+    <schema id="15" parent="1" name="ANONYMOUS">
+      <ObjectId>46</ObjectId>
+    </schema>
+    <schema id="16" parent="1" name="ORDSYS">
+      <ObjectId>53</ObjectId>
+    </schema>
+    <schema id="17" parent="1" name="ORDDATA">
+      <ObjectId>54</ObjectId>
+    </schema>
+    <schema id="18" parent="1" name="ORDPLUGINS">
+      <ObjectId>55</ObjectId>
+    </schema>
+    <schema id="19" parent="1" name="SI_INFORMTN_SCHEMA">
+      <ObjectId>56</ObjectId>
+    </schema>
+    <schema id="20" parent="1" name="MDSYS">
+      <ObjectId>57</ObjectId>
+    </schema>
+    <schema id="21" parent="1" name="OLAPSYS">
+      <ObjectId>61</ObjectId>
+    </schema>
+    <schema id="22" parent="1" name="MDDATA">
+      <ObjectId>65</ObjectId>
+    </schema>
+    <schema id="23" parent="1" name="SPATIAL_WFS_ADMIN_USR">
+      <ObjectId>67</ObjectId>
+    </schema>
+    <schema id="24" parent="1" name="SPATIAL_CSW_ADMIN_USR">
+      <ObjectId>70</ObjectId>
+    </schema>
+    <schema id="25" parent="1" name="SYSMAN">
+      <ObjectId>72</ObjectId>
+    </schema>
+    <schema id="26" parent="1" name="MGMT_VIEW">
+      <ObjectId>74</ObjectId>
+    </schema>
+    <schema id="27" parent="1" name="FLOWS_FILES">
+      <ObjectId>75</ObjectId>
+    </schema>
+    <schema id="28" parent="1" name="APEX_PUBLIC_USER">
+      <ObjectId>76</ObjectId>
+    </schema>
+    <schema id="29" parent="1" name="APEX_030200">
+      <ObjectId>78</ObjectId>
+    </schema>
+    <schema id="30" parent="1" name="OWBSYS">
+      <ObjectId>79</ObjectId>
+    </schema>
+    <schema id="31" parent="1" name="OWBSYS_AUDIT">
+      <ObjectId>83</ObjectId>
+    </schema>
+    <schema id="32" parent="1" name="SCOTT">
+      <ObjectId>84</ObjectId>
+    </schema>
+    <schema id="33" parent="1" name="HR">
+      <ObjectId>85</ObjectId>
+    </schema>
+    <schema id="34" parent="1" name="XS$NULL">
+      <ObjectId>2147483638</ObjectId>
+    </schema>
+    <sequence id="35" parent="2" name="REPID_SEQ">
+      <ObjectId>73474</ObjectId>
+      <CreatedTimestamp>2016-12-18.22:57:53</CreatedTimestamp>
+      <ModifiedTimestamp>2016-12-18.22:57:53</ModifiedTimestamp>
+      <SequenceIdentity>1</SequenceIdentity>
+      <CacheSize>-2147483648</CacheSize>
+    </sequence>
+    <table id="36" parent="2" name="PRODUCT">
+      <ObjectId>73472</ObjectId>
+      <CreatedTimestamp>2016-12-18.22:17:55</CreatedTimestamp>
+      <ModifiedTimestamp>2016-12-18.22:17:55</ModifiedTimestamp>
+    </table>
+    <table id="37" parent="2" name="PURCHASE">
+      <ObjectId>73468</ObjectId>
+      <CreatedTimestamp>2016-12-18.22:16:57</CreatedTimestamp>
+      <ModifiedTimestamp>2016-12-18.22:16:57</ModifiedTimestamp>
+    </table>
+    <table id="38" parent="2" name="QUESTION">
+      <ObjectId>73482</ObjectId>
+      <CreatedTimestamp>2016-12-27.20:07:05</CreatedTimestamp>
+      <ModifiedTimestamp>2016-12-27.20:19:23</ModifiedTimestamp>
+    </table>
+    <table id="39" parent="2" name="REPERTORY">
+      <ObjectId>73470</ObjectId>
+      <CreatedTimestamp>2016-12-18.22:17:20</CreatedTimestamp>
+      <ModifiedTimestamp>2016-12-18.23:02:18</ModifiedTimestamp>
+    </table>
+    <table id="40" parent="2" name="SCORE">
+      <ObjectId>73484</ObjectId>
+      <CreatedTimestamp>2016-12-27.20:08:01</CreatedTimestamp>
+      <ModifiedTimestamp>2016-12-27.22:16:35</ModifiedTimestamp>
+    </table>
+    <table id="41" parent="2" name="STUDENT">
+      <ObjectId>73494</ObjectId>
+      <CreatedTimestamp>2016-12-27.22:14:50</CreatedTimestamp>
+      <ModifiedTimestamp>2016-12-27.22:14:50</ModifiedTimestamp>
+    </table>
+    <routine id="42" parent="2" name="CHECK_LOGIN">
+      <ObjectId>73486</ObjectId>
+      <RoutineKind>procedure</RoutineKind>
+      <CreatedTimestamp>2016-12-27.20:55:35</CreatedTimestamp>
+      <ModifiedTimestamp>2016-12-27.22:21:39</ModifiedTimestamp>
+    </routine>
+    <column id="43" parent="36" name="PROCTID">
+      <Position>1</Position>
+      <DataType>NUMBER(8)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="44" parent="36" name="PROCTNAME">
+      <Position>2</Position>
+      <DataType>VARCHAR2(20)|0</DataType>
+    </column>
+    <column id="45" parent="36" name="PROCTUNIT">
+      <Position>3</Position>
+      <DataType>VARCHAR2(4)|0</DataType>
+    </column>
+    <column id="46" parent="36" name="PROCTPRICE">
+      <Position>4</Position>
+      <DataType>NUMBER(8,2)|0</DataType>
+    </column>
+    <column id="47" parent="36" name="PROCTDETAILS">
+      <Position>5</Position>
+      <DataType>VARCHAR2(200)|0</DataType>
+    </column>
+    <index id="48" parent="36" name="SYS_C0010846">
+      <ObjectId>73473</ObjectId>
+      <NameSurrogate>1</NameSurrogate>
+      <CreatedTimestamp>2016-12-18.22:17:55</CreatedTimestamp>
+      <ModifiedTimestamp>2016-12-18.22:17:55</ModifiedTimestamp>
+      <TablespaceName>USERDATA</TablespaceName>
+      <ColNames>PROCTID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="49" parent="36" name="SYS_C0010846">
+      <NameSurrogate>1</NameSurrogate>
+      <ModifiedTimestamp>2016-12-18.22:17:55</ModifiedTimestamp>
+      <ColNames>PROCTID</ColNames>
+      <InitiallyDeferred>1</InitiallyDeferred>
+      <UnderlyingIndexName>SYS_C0010846</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <column id="50" parent="37" name="PID">
+      <Position>1</Position>
+      <DataType>NUMBER(10)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="51" parent="37" name="PROCTID">
+      <Position>2</Position>
+      <DataType>VARCHAR2(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="52" parent="37" name="PROCTCOUNT">
+      <Position>3</Position>
+      <DataType>NUMBER(8)|0</DataType>
+    </column>
+    <column id="53" parent="37" name="PDATE">
+      <Position>4</Position>
+      <DataType>DATE|0</DataType>
+    </column>
+    <column id="54" parent="37" name="SUMCOST">
+      <Position>5</Position>
+      <DataType>NUMBER(8,2)|0</DataType>
+    </column>
+    <column id="55" parent="37" name="STAFFID">
+      <Position>6</Position>
+      <DataType>NUMBER(10)|0</DataType>
+    </column>
+    <column id="56" parent="37" name="STAFFNAME">
+      <Position>7</Position>
+      <DataType>VARCHAR2(20)|0</DataType>
+    </column>
+    <column id="57" parent="37" name="STATUS">
+      <Position>8</Position>
+      <DataType>CHAR(1)|0</DataType>
+      <DefaultExpression>&apos;0&apos;   -- 入库状态 ，0--未入库，1--已入库
+</DefaultExpression>
+    </column>
+    <index id="58" parent="37" name="SYS_C0010843">
+      <ObjectId>73469</ObjectId>
+      <NameSurrogate>1</NameSurrogate>
+      <CreatedTimestamp>2016-12-18.22:16:57</CreatedTimestamp>
+      <ModifiedTimestamp>2016-12-18.22:16:57</ModifiedTimestamp>
+      <TablespaceName>USERDATA</TablespaceName>
+      <ColNames>PID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="59" parent="37" name="SYS_C0010843">
+      <NameSurrogate>1</NameSurrogate>
+      <ModifiedTimestamp>2016-12-18.22:16:57</ModifiedTimestamp>
+      <ColNames>PID</ColNames>
+      <InitiallyDeferred>1</InitiallyDeferred>
+      <UnderlyingIndexName>SYS_C0010843</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <column id="60" parent="38" name="QUE_NO">
+      <Position>1</Position>
+      <DataType>NUMBER(3)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="61" parent="38" name="QUE_NOTE">
+      <Position>2</Position>
+      <DataType>VARCHAR2(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="62" parent="38" name="QUE_DETAIL">
+      <Position>3</Position>
+      <DataType>VARCHAR2(1024)|0</DataType>
+    </column>
+    <column id="63" parent="38" name="QUE_CHOICE">
+      <Position>4</Position>
+      <DataType>VARCHAR2(1024)|0</DataType>
+    </column>
+    <column id="64" parent="38" name="QUE_ANSWER">
+      <Position>5</Position>
+      <DataType>VARCHAR2(6)|0</DataType>
+    </column>
+    <column id="65" parent="38" name="STAGE">
+      <Position>6</Position>
+      <DataType>CHAR(1)|0</DataType>
+    </column>
+    <index id="66" parent="38" name="SYS_C0010853">
+      <ObjectId>73483</ObjectId>
+      <NameSurrogate>1</NameSurrogate>
+      <CreatedTimestamp>2016-12-27.20:07:05</CreatedTimestamp>
+      <ModifiedTimestamp>2016-12-27.20:07:05</ModifiedTimestamp>
+      <TablespaceName>USERDATA</TablespaceName>
+      <ColNames>QUE_NO</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="67" parent="38" name="SYS_C0010853">
+      <NameSurrogate>1</NameSurrogate>
+      <ModifiedTimestamp>2016-12-27.20:07:05</ModifiedTimestamp>
+      <ColNames>QUE_NO</ColNames>
+      <InitiallyDeferred>1</InitiallyDeferred>
+      <UnderlyingIndexName>SYS_C0010853</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <column id="68" parent="39" name="REPID">
+      <Position>1</Position>
+      <DataType>NUMBER(8)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="69" parent="39" name="PROCTID">
+      <Position>2</Position>
+      <DataType>VARCHAR2(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="70" parent="39" name="PRODUCTCOUNT">
+      <Position>3</Position>
+      <DataType>NUMBER(8)|0</DataType>
+    </column>
+    <index id="71" parent="39" name="SYS_C0010845">
+      <ObjectId>73471</ObjectId>
+      <NameSurrogate>1</NameSurrogate>
+      <CreatedTimestamp>2016-12-18.22:17:20</CreatedTimestamp>
+      <ModifiedTimestamp>2016-12-18.22:17:20</ModifiedTimestamp>
+      <TablespaceName>USERDATA</TablespaceName>
+      <ColNames>REPID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="72" parent="39" name="SYS_C0010845">
+      <NameSurrogate>1</NameSurrogate>
+      <ModifiedTimestamp>2016-12-18.22:17:20</ModifiedTimestamp>
+      <ColNames>REPID</ColNames>
+      <InitiallyDeferred>1</InitiallyDeferred>
+      <UnderlyingIndexName>SYS_C0010845</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <column id="73" parent="40" name="STU_NO">
+      <Position>1</Position>
+      <DataType>VARCHAR2(12)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="74" parent="40" name="STAGE">
+      <Position>2</Position>
+      <DataType>CHAR(1)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="75" parent="40" name="SCORE">
+      <Position>3</Position>
+      <DataType>NUMBER(3)|0</DataType>
+    </column>
+    <index id="76" parent="40" name="SCORE_STU_NO_STAGE_PK">
+      <ObjectId>73485</ObjectId>
+      <CreatedTimestamp>2016-12-27.20:08:01</CreatedTimestamp>
+      <ModifiedTimestamp>2016-12-27.20:08:01</ModifiedTimestamp>
+      <TablespaceName>USERDATA</TablespaceName>
+      <ColNames>STU_NO
+STAGE</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="77" parent="40" name="SCORE_STU_NO_STAGE_PK">
+      <ModifiedTimestamp>2016-12-27.20:08:01</ModifiedTimestamp>
+      <ColNames>STU_NO
+STAGE</ColNames>
+      <InitiallyDeferred>1</InitiallyDeferred>
+      <UnderlyingIndexName>SCORE_STU_NO_STAGE_PK</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <column id="78" parent="41" name="STU_NO">
+      <Position>1</Position>
+      <DataType>VARCHAR2(12)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="79" parent="41" name="STU_NAME">
+      <Position>2</Position>
+      <DataType>VARCHAR2(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="80" parent="41" name="STU_SEX">
+      <Position>3</Position>
+      <DataType>CHAR(1)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="81" parent="41" name="STU_CLASS">
+      <Position>4</Position>
+      <DataType>VARCHAR2(5)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="82" parent="41" name="STU_PASSWD">
+      <Position>5</Position>
+      <DataType>VARCHAR2(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="83" parent="41" name="SYS_C0010872">
+      <ObjectId>73495</ObjectId>
+      <NameSurrogate>1</NameSurrogate>
+      <CreatedTimestamp>2016-12-27.22:14:50</CreatedTimestamp>
+      <ModifiedTimestamp>2016-12-27.22:14:50</ModifiedTimestamp>
+      <TablespaceName>USERDATA</TablespaceName>
+      <ColNames>STU_NO</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="84" parent="41" name="SYS_C0010872">
+      <NameSurrogate>1</NameSurrogate>
+      <ModifiedTimestamp>2016-12-27.22:14:50</ModifiedTimestamp>
+      <ColNames>STU_NO</ColNames>
+      <InitiallyDeferred>1</InitiallyDeferred>
+      <UnderlyingIndexName>SYS_C0010872</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <argument id="85" parent="42" name="V_NAME">
+      <ArgumentDirection>O</ArgumentDirection>
+      <DataType>VARCHAR2|0</DataType>
+    </argument>
+    <argument id="86" parent="42" name="V_PWD">
+      <DataType>VARCHAR2|0</DataType>
+    </argument>
+    <argument id="87" parent="42" name="V_MSG">
+      <ArgumentDirection>O</ArgumentDirection>
+      <DataType>NUMBER|0</DataType>
+    </argument>
+    <argument id="88" parent="42" name="V_SNO">
+      <DataType>VARCHAR2|0</DataType>
+    </argument>
+  </database-model>
+</dataSource>
