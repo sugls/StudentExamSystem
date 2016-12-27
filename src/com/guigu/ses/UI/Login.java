@@ -1,5 +1,7 @@
 package com.guigu.ses.UI;
 
+import com.guigu.ses.DTO.Students;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,10 +10,10 @@ import java.awt.event.ActionListener;
 /**
  * Created by Administrator on 2016/12/27.
  */
-public class Login implements ActionListener{
+public class Login implements ActionListener {
 
     private JFrame frame = new JFrame("考生登录");
-    private JLabel l_title = new JLabel("杭州归谷考试系统",JLabel.CENTER);
+    private JLabel l_title = new JLabel("杭州归谷考试系统", JLabel.CENTER);
     private JLabel l_stuno = new JLabel("学 号：");
     private JLabel l_passwd = new JLabel("密 码：");
     private JTextField tf_stuno = new JTextField(15);
@@ -24,11 +26,11 @@ public class Login implements ActionListener{
     private JPanel p_center = new JPanel();
 
     public Login() {
-        l_title.setFont(new Font("Microsoft YaHei",Font.BOLD,20));
-        frame.add(l_title,"North");
+        l_title.setFont(new Font("Microsoft YaHei", Font.BOLD, 20));
+        frame.add(l_title, "North");
         p_south.add(b_login);
         p_south.add(b_regist);
-        frame.add(p_south,"South");
+        frame.add(p_south, "South");
 
         p_stuno.add(l_stuno);
         p_stuno.add(tf_stuno);
@@ -44,8 +46,8 @@ public class Login implements ActionListener{
 
         frame.setVisible(true);
         frame.setResizable(false);
-        frame.setLocation(300,300);
-        frame.setSize(400,200);
+        frame.setLocation(300, 300);
+        frame.setSize(400, 200);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
@@ -56,8 +58,27 @@ public class Login implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource()==b_regist){
+        if (e.getSource() == b_regist) {
             new Regist();
+        }
+        if (e.getSource() == b_login) {
+            String sno = tf_stuno.getText().trim();
+            String passwd = String.valueOf(pf_passwd.getPassword()).trim();
+            if (sno == null || "".equals(sno)) {
+                JOptionPane.showMessageDialog(frame, "学号不能为空", "提示信息", JOptionPane.WARNING_MESSAGE);
+                tf_stuno.requestFocus();
+            } else if (passwd == null || "".equals(passwd)) {
+                JOptionPane.showMessageDialog(frame, "密码不能为空", "提示信息", JOptionPane.WARNING_MESSAGE);
+                pf_passwd.requestFocus();
+            } else {
+                String[] msg = Students.checkLogin(sno, passwd);
+                if ("登录成功".equals(msg[0])) {
+                    new Main(msg[1]);
+                    frame.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(frame, msg[0], "提示", JOptionPane.WARNING_MESSAGE);
+                }
+            }
         }
     }
 }

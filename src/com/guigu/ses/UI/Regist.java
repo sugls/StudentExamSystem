@@ -1,12 +1,16 @@
 package com.guigu.ses.UI;
 
+import com.guigu.ses.DTO.Students;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by Lsc on 2016/12/27.
  */
-public class Regist {
+public class Regist implements ActionListener{
 
     private JFrame f_regist = new JFrame("考生注册");
     private JLabel l_title = new JLabel("考生注册", JLabel.CENTER);
@@ -22,7 +26,7 @@ public class Regist {
     private JPasswordField pf_confirm = new JPasswordField(15);
     private JLabel l_sex = new JLabel("性        别：");
     private ButtonGroup group_sex = new ButtonGroup();
-    private JRadioButton rb_male = new JRadioButton("男");
+    private JRadioButton rb_male = new JRadioButton("男",true);
     private JRadioButton rb_female = new JRadioButton("女");
     private JButton b_regist = new JButton("提交");
     private JButton b_reset = new JButton("重置");
@@ -42,6 +46,10 @@ public class Regist {
         p_south.add(b_regist);
         p_south.add(b_reset);
         f_regist.add(p_south, "South");
+
+        //注册监听器
+        b_regist.addActionListener(this);
+        b_reset.addActionListener(this);
 
         p_sno.add(l_stuno);
         p_sno.add(tf_stuno);
@@ -78,6 +86,38 @@ public class Regist {
         f_regist.setLocation(300, 300);
         f_regist.setResizable(false);
 
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource()==b_regist){
+            String sno = tf_stuno.getText().trim();
+            String sname = tf_stuname.getText().trim();
+            String sex = rb_male.isSelected()?"1":"0";
+            String sclass = tf_class.getText().trim();
+            String passwd = String.valueOf(pf_passwd.getPassword()).trim();
+
+            boolean reg = Students.regist(sno,sname,sex,sclass,passwd);
+            if (reg==true){
+                //JOptionPane.showConfirmDialog(f_regist,"注册成功，是否去登录？","提示",JOptionPane.YES_NO_OPTION);
+                JButton[] btns = new JButton[]{new JButton("去登陆"),new JButton("取消")};
+                JOptionPane  op= new JOptionPane("注册成功",JOptionPane.QUESTION_MESSAGE,JOptionPane.YES_NO_OPTION,new ImageIcon(),btns);
+                op.setSize(200,100);
+                op.setLocation(f_regist.getX()+20,f_regist.getY()+50);
+                op.setVisible(true);
+
+                btns[0].addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        f_regist.dispose();
+                    }
+                });
+            }
+
+        }
+        if (e.getSource()==b_reset){
+
+        }
     }
 
     /*public static void main(String[] args) {

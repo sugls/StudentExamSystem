@@ -15,7 +15,7 @@ public class DBUtil {
 
     public DBUtil() {
         Properties ps = new Properties();
-        InputStream inputStream = super.getClass().getClassLoader().getResourceAsStream("database");
+        InputStream inputStream = super.getClass().getClassLoader().getResourceAsStream("database.properties");
         try {
             ps.load(inputStream);
         } catch (IOException e) {
