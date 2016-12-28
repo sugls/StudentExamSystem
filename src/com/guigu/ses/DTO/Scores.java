@@ -66,7 +66,6 @@ public class Scores {
             rs = ps.executeQuery();
             while (rs.next()){
                 result = String.valueOf(rs.getInt("score"));
-                System.out.println(result);
             }
         } catch (SQLException e) {
             e.printStackTrace();
