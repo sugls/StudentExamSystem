@@ -1,11 +1,14 @@
 package com.guigu.ses.UI;
 
 import com.guigu.ses.DTO.Students;
+import com.guigu.ses.Util.buildExamXml;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Administrator on 2016/12/27.
@@ -74,6 +77,10 @@ public class Login implements ActionListener {
                 String[] msg = Students.checkLogin(sno, passwd);
                 if ("登录成功".equals(msg[0])) {
                     new Main(msg[1]);
+                    String date = new SimpleDateFormat("yyyyMMdd").format(new Date()).toString();
+                    buildExamXml.createXmlFile("questions/"+ date +"_stage1.xml","1");
+                    buildExamXml.createXmlFile("questions/"+ date +"_stage2.xml","2");
+                    buildExamXml.createXmlFile("questions/"+ date +"_stage3.xml","3");
                     frame.dispose();
                 } else {
                     JOptionPane.showMessageDialog(frame, msg[0], "提示", JOptionPane.WARNING_MESSAGE);

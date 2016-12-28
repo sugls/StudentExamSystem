@@ -1,6 +1,15 @@
 package com.guigu.ses.DTO;
 
+import com.guigu.ses.Util.DBUtil;
+import com.guigu.ses.Util.parseExamXml;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Created by Lsc on 2016/12/27.
@@ -74,9 +83,46 @@ public class Questions {
         this.stage = stage;
     }
 
-    public static List<Questions> getQuestionsByStage(String stage){
-        List<Questions> list = null;
+    public static List<Questions> getQuestionsByStage(String stage) {
+        List<Questions> list = new Vector<>();
+        String sql = "SELECT que_no, que_note, que_detail, que_choice, que_answer FROM question WHERE stage = ?";
+        DBUtil dbUtil = new DBUtil();
+        ResultSet rs = null;
+        PreparedStatement ps = dbUtil.getPreparedStatement(sql);
+        try {
+            ps.setString(1, stage);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Questions q = new Questions();
+                q.setQueno(rs.getInt("que_no"));
+                q.setNote(rs.getString("que_note"));
+                q.setDetail(rs.getString("que_detail"));
+                q.setChoice(rs.getString("que_choice"));
+                q.setAnswer(rs.getString("que_answer"));
+                list.add(q);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        dbUtil.close();
         return list;
+    }
+
+
+    public List<Questions> getQusetionsListByStageFromXml(String stage) {
+        String filename = new StringBuffer(new SimpleDateFormat("yyyyMMdd").format(new Date())).append("_stage").append(stage).append(".xml").toString();
+        return parseExamXml.parseExamXml(filename);
     }
 
 }

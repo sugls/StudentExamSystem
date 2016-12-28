@@ -1,5 +1,7 @@
 package com.guigu.ses.UI;
 
+import com.guigu.ses.DTO.Scores;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,6 +20,7 @@ public class Main implements ActionListener{
     private JPanel p_south = new JPanel();
     private JLabel l_main = new JLabel();
     private String name;
+    private String score_s1;
 
     public Main() {
         l_title.setFont(new Font("Microsoft YaHei",Font.BOLD,20));
@@ -25,6 +28,9 @@ public class Main implements ActionListener{
         p_south.add(b_first);
         p_south.add(b_second);
         p_south.add(b_third);
+        b_first.addActionListener(this);
+        b_second.addActionListener(this);
+        b_third.addActionListener(this);
         frame.add(p_south,"South");
         frame.add(l_main);
         l_main.setFont(new Font("Microsoft YaHei",Font.PLAIN,20));
@@ -39,10 +45,23 @@ public class Main implements ActionListener{
         this();
         this.name = name;
         l_main.setText(name+"同学你好,欢迎使用考试系统");
+        score_s1 = Scores.getStuScoreByStage(name,"1");
+        if (score_s1==null){
+            b_second.setEnabled(false);
+            b_third.setEnabled(false);
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
+        if (e.getSource()==b_first){
+            if (score_s1!=null){
+                l_main.setText(name+"同学,你的第一阶段考试成绩为："+score_s1);
+            }else{
+                new Exam(name,"1");
+            }
+        }
 
     }
 

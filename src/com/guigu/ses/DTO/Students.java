@@ -6,6 +6,8 @@ import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Lsc on 2016/12/27.
@@ -17,6 +19,9 @@ public class Students {
     private String stuclass;
     private String sex;
     private String passwd;
+
+    private static final String reg_sno = "\\d{4,12}";
+    private static final String reg_pwd = "([a-z]|[A-z]|[0-9]){4,20}";
 
     public Students() {
     }
@@ -130,7 +135,7 @@ public class Students {
      * @return 布尔值
      */
     public static boolean regist(String sno,String name,String sex,String sclass,String passwd){
-        boolean result = false;
+        int result = 0;
         DBUtil dbUtil = new DBUtil();
         String sql = "{call add_student(?,?,?,?,?)}";
         PreparedStatement ps = dbUtil.getCallableStatement(sql);
@@ -140,7 +145,7 @@ public class Students {
             ps.setString(3,sex);
             ps.setString(4,sclass);
             ps.setString(5,passwd);
-            result = ps.execute();
+            result = ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -153,7 +158,28 @@ public class Students {
             }
         }
         dbUtil.close();
-        return result;
+        return result != 0;
     }
+
+
+    public static String checkRegist(String[] infos){
+        String result = "验证成功";
+        Pattern p_sno = Pattern.compile(reg_sno);
+        Pattern p_pwd = Pattern.compile(reg_pwd);
+
+        Matcher m_sno = p_sno.matcher(infos[0]);
+        Matcher m_pwd = p_pwd.matcher(infos[4]);
+        if (!m_sno.matches()) {
+            result = "学号必须为4-12位数字";
+        } else if (!m_pwd.matches()){
+            result = "密码必须为4-20位数字或英文字符";
+        }else if (!infos[4].equals(infos[5])){
+            result = "两次密码输入不相同";
+        }
+        return result;
+
+    }
+
+
 
 }

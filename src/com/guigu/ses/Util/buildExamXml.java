@@ -1,6 +1,7 @@
 package com.guigu.ses.Util;
 
 import com.guigu.ses.DTO.Questions;
+import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentFactory;
 import org.dom4j.Element;
@@ -31,13 +32,15 @@ public class buildExamXml {
                 list) {
             Element question = factory.createElement("question");
             root.add(question);
+            Attribute id = factory.createAttribute(question,"id",String.valueOf(q.getQueno()));
+            question.add(id);
             Element note = factory.createElement("note");
             question.add(note);
             note.add(factory.createText(q.getNote()));
 
             Element detail = factory.createElement("detail");
             question.add(detail);
-            note.add(factory.createText(q.getDetail()));
+            detail.add(factory.createText(q.getDetail()));
 
             Element choice = factory.createElement("choice");
             question.add(choice);
@@ -49,6 +52,9 @@ public class buildExamXml {
         }
 
         OutputFormat format = OutputFormat.createPrettyPrint();
+        format.setTrimText(false);
+        format.setIndent(true);
+        format.setNewlines(true);
         XMLWriter writer = null;
         try {
             writer = new XMLWriter(new FileWriter(filename), format);
