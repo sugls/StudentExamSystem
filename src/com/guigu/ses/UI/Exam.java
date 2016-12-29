@@ -2,7 +2,6 @@ package com.guigu.ses.UI;
 
 import com.guigu.ses.DTO.Questions;
 import com.guigu.ses.DTO.Scores;
-import com.guigu.ses.Util.Countdown;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,13 +19,14 @@ import java.util.Timer;
 public class Exam implements ActionListener, ItemListener {
 
     private JFrame frame = new JFrame("考试系统");
-    private JPanel p_north = new JPanel();
+    private JPanel p_north = new JPanel(new GridLayout(1,2));
     private JPanel p_south = new JPanel(new GridLayout(1, 4));
     private CardLayout card = new CardLayout();
     private JPanel p_center = new JPanel(card);
-
+    private JPanel p_north_1 = new JPanel(new FlowLayout(FlowLayout.LEFT,10,10));
+    private JPanel p_north_2 = new JPanel(new FlowLayout(FlowLayout.RIGHT,10,10));
     private JLabel l_north_1 = new JLabel();
-    private JLabel l_north_2 = new JLabel();
+    private JLabel l_north_2 = new JLabel("考试时间：02:00:00");
     private JTextArea ta_question = null;
     private JScrollPane sp_question = new JScrollPane(ta_question);
     private JPanel p_choice = new JPanel();
@@ -56,9 +56,11 @@ public class Exam implements ActionListener, ItemListener {
     private Map<String, String> answer = new HashMap<>();
 
     public Exam() {
-
-        p_north.add(l_north_1, JPanel.LEFT_ALIGNMENT);
-        p_north.add(l_north_2, JPanel.RIGHT_ALIGNMENT);
+        p_north_1.add(l_north_1);
+        l_north_2.setFont(new Font("YaHei",Font.PLAIN,14));
+        p_north_2.add(l_north_2);
+        p_north.add(p_north_1);
+        p_north.add(p_north_2);
         frame.add(p_north, "North");
         p_south_1.add(b_start);
         b_start.addActionListener(this);
@@ -107,8 +109,42 @@ public class Exam implements ActionListener, ItemListener {
 
         if (e.getSource() == b_start) {
 
-            java.util.Timer timer = new Timer("countdown");
-            timer.schedule(new Countdown(),0,1000);
+            java.util.Timer timer = new Timer();
+            long start = System.currentTimeMillis();
+           // long end =start+ 2*60*60*1000;
+            long end = start+1*60*1000;
+            timer.schedule(new TimerTask() {
+                StringBuffer buffer = new StringBuffer();
+
+                @Override
+                public void run() {
+                    buffer.delete(0,buffer.length());
+                    long show = end - System.currentTimeMillis();
+                    long h = show/1000/60/60;
+                    long m = show/1000/60%60;
+                    long s = show/1000%60;
+                    buffer = buffer.append("倒计时：").append(h<10?"0":"").append(h).append(":").append(m<10?"0":"").append(m).append(":").append(s<10?"0":"").append(s);
+                    l_north_2.setText(buffer.toString());
+                }
+            }, 0, 1000);
+            l_north_2.setForeground(new Color(255,0,0));
+
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    JOptionPane.showMessageDialog(frame,"距离考试结束还有5分钟","提示",JOptionPane.WARNING_MESSAGE);
+                }
+            },new Date(end-1*30*1000));
+
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    timer.cancel();
+                    JOptionPane.showMessageDialog(frame,"考试时间结束！","提示",JOptionPane.WARNING_MESSAGE);
+                    submit();
+                }
+            },new Date(end));
+
 
 
             JPanel[] panel = new JPanel[list.size()];
@@ -166,13 +202,17 @@ public class Exam implements ActionListener, ItemListener {
         }
 
         if (e.getSource() == b_submit) {
-            double s = Scores.countScore(answer, list);
-            Scores.saveScore(sno, stage, s);
-            p_center.removeAll();
-            JLabel l_score = new JLabel(new StringBuffer().append(name).append(",你好\n你的第").append(stage).append("阶段考试成绩为：").append(s).toString(),JLabel.CENTER);
-            p_center.add(l_score);
+            submit();
         }
 
+    }
+
+    private void submit(){
+        double s = Scores.countScore(answer, list);
+        Scores.saveScore(sno, stage, s);
+        p_center.removeAll();
+        JLabel l_score = new JLabel(new StringBuffer().append(name).append(",你好\n你的第").append(stage).append("阶段考试成绩为：").append(s).toString(),JLabel.CENTER);
+        p_center.add(l_score);
     }
 
     @Override
