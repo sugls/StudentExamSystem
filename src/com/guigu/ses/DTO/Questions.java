@@ -3,6 +3,7 @@ package com.guigu.ses.DTO;
 import com.guigu.ses.Util.DBUtil;
 import com.guigu.ses.Util.parseExamXml;
 
+import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -121,7 +122,15 @@ public class Questions {
 
 
     public List<Questions> getQusetionsListByStageFromXml(String stage) {
-        String filename = new StringBuffer(new SimpleDateFormat("yyyyMMdd").format(new Date())).append("_stage").append(stage).append(".xml").toString();
+        File que = new File("questions");
+        String filename = null;
+        String[] files =  que.list();
+        for (String s:files){
+            while(s.contains("stage"+stage));{
+                filename = s;
+            }
+        }
+       // String filename = new StringBuffer(new SimpleDateFormat("yyyyMMdd").format(new Date())).append("_stage").append(stage).append(".xml").toString();
         return parseExamXml.parseExamXml(filename);
     }
 

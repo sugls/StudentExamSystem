@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -76,7 +77,12 @@ public class Login implements ActionListener {
             } else {
                 String[] msg = Students.checkLogin(sno, passwd);
                 if ("登录成功".equals(msg[0])) {
-                    new Main(msg[1]);
+                    new Main(sno,msg[1]);
+                    File que = new File("questions");
+                    String[] q = que.list();
+                    for (String s:q){
+                        new File("questions/"+s).delete();
+                    }
                     String date = new SimpleDateFormat("yyyyMMdd").format(new Date()).toString();
                     buildExamXml.createXmlFile("questions/"+ date +"_stage1.xml","1");
                     buildExamXml.createXmlFile("questions/"+ date +"_stage2.xml","2");

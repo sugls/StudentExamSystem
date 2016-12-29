@@ -1,21 +1,27 @@
 package com.guigu.ses.UI;
 
 import com.guigu.ses.DTO.Questions;
+import com.guigu.ses.DTO.Scores;
+import com.guigu.ses.Util.Countdown;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.*;
 import java.util.List;
+import java.util.Timer;
 
 /**
  * Created by Lsc on 2016/12/27.
  */
-public class Exam implements ActionListener{
+public class Exam implements ActionListener, ItemListener {
 
     private JFrame frame = new JFrame("考试系统");
     private JPanel p_north = new JPanel();
-    private JPanel p_south = new JPanel(new GridLayout(1,4));
+    private JPanel p_south = new JPanel(new GridLayout(1, 4));
     private CardLayout card = new CardLayout();
     private JPanel p_center = new JPanel(card);
 
@@ -25,9 +31,11 @@ public class Exam implements ActionListener{
     private JScrollPane sp_question = new JScrollPane(ta_question);
     private JPanel p_choice = new JPanel();
     private JLabel l_choice = new JLabel("选项");
-    private CheckboxGroup group_choice = new CheckboxGroup();
-    private JCheckBox[] cb_choice;
+    private CheckboxGroup group_choice;
+    private Checkbox[] cb_choice;
+    private List<Checkbox[]> list_cb = new Vector<>();
     private JPanel[] p_card;
+
 
     private JButton b_start = new JButton("开始");
     private JPanel p_south_1 = new JPanel();
@@ -41,14 +49,17 @@ public class Exam implements ActionListener{
     private JButton b_submit = new JButton("交卷");
     private JPanel p_south_4 = new JPanel();
     private String name;
+    private String sno;
     private String stage;
+    private String[] choice;
     private List<Questions> list;
+    private Map<String, String> answer = new HashMap<>();
 
     public Exam() {
 
-        p_north.add(l_north_1,JPanel.LEFT_ALIGNMENT);
-        p_north.add(l_north_2,JPanel.RIGHT_ALIGNMENT);
-        frame.add(p_north,"North");
+        p_north.add(l_north_1, JPanel.LEFT_ALIGNMENT);
+        p_north.add(l_north_2, JPanel.RIGHT_ALIGNMENT);
+        frame.add(p_north, "North");
         p_south_1.add(b_start);
         b_start.addActionListener(this);
         p_south.add(p_south_1);
@@ -67,17 +78,20 @@ public class Exam implements ActionListener{
         p_south.add(p_south_4);
 
 
-        frame.add(p_south,"South");
+        frame.add(p_south, "South");
         frame.setVisible(true);
-        frame.setSize(650,500);
-        frame.setLocation(400,400);
+        frame.setSize(650, 500);
+        frame.setLocation(400, 400);
         frame.setResizable(false);
 
     }
 
-    public Exam(String name,String stage){
+    public Exam(String name, String stage, String sno) {
         this();
-        l_north_1.setText(name+"同学，第"+stage+"阶段考试");
+        this.name = name;
+        this.sno = sno;
+        this.stage = stage;
+        l_north_1.setText(name + "同学，第" + stage + "阶段考试");
         list = Questions.getQuestionsByStage(stage);
         p_card = new JPanel[list.size()];
 
@@ -91,26 +105,48 @@ public class Exam implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (e.getSource()==b_start){
-            String[] choice;
-            frame.remove(sp_question);
+        if (e.getSource() == b_start) {
+
+            java.util.Timer timer = new Timer("countdown");
+            timer.schedule(new Countdown(),0,1000);
+
+
             JPanel[] panel = new JPanel[list.size()];
-            for (int i =0;i<panel.length;i++){
-                panel[i] = new JPanel(new GridLayout(2,1));
-                ta_question = new JTextArea(10,45);
-                ta_question.setText(list.get(i).getDetail());
+            for (int i = 0; i < panel.length; i++) {
+
+                frame.remove(sp_question);
+                JPanel p_que = new JPanel(new BorderLayout());
+                JLabel l_quetitle = new JLabel();
+                panel[i] = new JPanel(new GridLayout(2, 1));
+                ta_question = new JTextArea(10, 45);
+                ta_question.setText(list.get(i).getDetail().trim());
                 ta_question.setEditable(false);
                 sp_question = new JScrollPane(ta_question);
+                String note = list.get(i).getNote();
 
                 choice = list.get(i).getChoice().trim().split("\n");
-                p_choice = new JPanel(new GridLayout(choice.length+1,1));
+                p_choice = new JPanel(new GridLayout(choice.length + 1, 1));
+                cb_choice = new Checkbox[choice.length];
+                list_cb.add(cb_choice);
+                group_choice = new CheckboxGroup();
                 p_choice.add(l_choice);
-                for (int j=0;j<choice.length;j++){
-                    p_choice.add(new JCheckBox(String.valueOf((char)( j+'A'))+") "+choice[j]),JPanel.LEFT_ALIGNMENT);
+                for (int j = 0; j < choice.length; j++) {
+                    if (!"multiple selection".equals(note)) {
+                        cb_choice[j] = new Checkbox(String.valueOf((char) (j + 'A')) + ") " + choice[j], false, group_choice);
+                    } else {
+                        cb_choice[j] = new Checkbox(String.valueOf((char) (j + 'A')) + ") " + choice[j]);
+
+                    }
+                    cb_choice[j].addItemListener(this);
+                    p_choice.add((cb_choice[j]), JPanel.LEFT_ALIGNMENT);
                 }
-                panel[i].add(sp_question);
+                String type = "multiple selection".equals(note) ? "多选题" : "单选题";
+                l_quetitle.setText("第" + (i + 1) + "题     " + type);
+                p_que.add(l_quetitle, "North");
+                p_que.add(sp_question);
+                panel[i].add(p_que);
                 panel[i].add(p_choice);
-                p_center.add(panel[i],String.valueOf(i));
+                p_center.add(panel[i], String.valueOf(i));
 
             }
 
@@ -119,14 +155,36 @@ public class Exam implements ActionListener{
 
         }
 
-        if (e.getSource()==b_pre){
+        if (e.getSource() == b_pre) {
             card.previous(p_center);
         }
-        if (e.getSource()==b_next){
+        if (e.getSource() == b_next) {
             card.next(p_center);
         }
-        if (e.getSource()==b_go){
-            card.show(p_center,tf_num.getText().trim());
+        if (e.getSource() == b_go) {
+            card.show(p_center, tf_num.getText().trim());
+        }
+
+        if (e.getSource() == b_submit) {
+            double s = Scores.countScore(answer, list);
+            Scores.saveScore(sno, stage, s);
+            p_center.removeAll();
+            JLabel l_score = new JLabel(new StringBuffer().append(name).append(",你好\n你的第").append(stage).append("阶段考试成绩为：").append(s).toString(),JLabel.CENTER);
+            p_center.add(l_score);
+        }
+
+    }
+
+    @Override
+    public void itemStateChanged(ItemEvent e) {
+        StringBuffer buffer = new StringBuffer();
+        for (int j=0;j<list_cb.size();j++){
+            cb_choice = (Checkbox[])list_cb.get(j);
+            buffer.delete(0,buffer.length());
+            for (Checkbox c: cb_choice){
+                buffer.append(c.getState()?"1":"0");
+            }
+            answer.put(String.valueOf(j+1), buffer.toString());
         }
 
     }

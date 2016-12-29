@@ -20,6 +20,7 @@ public class Main implements ActionListener{
     private JPanel p_south = new JPanel();
     private JLabel l_main = new JLabel();
     private String name;
+    private String sno;
     private String score_s1;
 
     public Main() {
@@ -41,8 +42,9 @@ public class Main implements ActionListener{
         frame.setLocation(300,300);
     }
 
-    public Main(String name) {
+    public Main(String sno,String name) {
         this();
+        this.sno = sno;
         this.name = name;
         l_main.setText(name+"同学你好,欢迎使用考试系统");
         score_s1 = Scores.getStuScoreByStage(name,"1");
@@ -59,7 +61,7 @@ public class Main implements ActionListener{
             if (score_s1!=null){
                 l_main.setText(name+"同学,你的第一阶段考试成绩为："+score_s1);
             }else{
-                new Exam(name,"1");
+                new Exam(name,"1",sno);
             }
         }
 

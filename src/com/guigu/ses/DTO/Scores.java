@@ -1,10 +1,14 @@
 package com.guigu.ses.DTO;
 
 import com.guigu.ses.Util.DBUtil;
+import com.guigu.ses.Util.parseExamXml;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Lsc on 2016/12/27.
@@ -89,6 +93,54 @@ public class Scores {
         System.out.println(sname+"   "+stage);
         System.out.println(result);
         return result;
+    }
+
+    public static double countScore(Map<String,String> answer, List<Questions> list){
+        double score = 0;
+        Map<String,String> correctAnswer = new HashMap<>();
+        for (int i=0;i<list.size();i++) {
+            correctAnswer.put(String.valueOf(i+1),list.get(i).getAnswer());
+        }
+        for (int i=0;i<correctAnswer.size();i++){
+            if (correctAnswer.get(String.valueOf(i+1)).equals(answer.get(String.valueOf(i+1)))){
+                score +=10;
+            }
+        }
+        for (int i=0;i<correctAnswer.size();i++) {
+            System.out.println(correctAnswer.get(String.valueOf(i+1)));
+        }
+        System.out.println("---------------");
+        for (int i=0;i<answer.size();i++){
+            System.out.println(answer.get(String.valueOf(i+1)));
+        }
+        return score;
+    }
+
+    public static void saveScore(String sno,String stage,double score){
+        System.out.println(sno+"sno");
+        System.out.println(stage);
+        System.out.println(score+"score");
+        String sql = "INSERT INTO score(stu_no, stage, score) VALUES(?,?,?)";
+        DBUtil dbUtil = new DBUtil();
+        PreparedStatement ps = dbUtil.getPreparedStatement(sql);
+        try {
+            ps.setString(1,sno);
+            ps.setString(2,stage);
+            ps.setInt(3,(int)score);
+            System.out.println(ps.executeUpdate());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            if (ps!=null){
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        dbUtil.close();
     }
 
 }
