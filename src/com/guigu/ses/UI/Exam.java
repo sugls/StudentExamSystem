@@ -5,10 +5,7 @@ import com.guigu.ses.DTO.Scores;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 import java.util.*;
 import java.util.List;
 import java.util.Timer;
@@ -19,12 +16,12 @@ import java.util.Timer;
 public class Exam implements ActionListener, ItemListener {
 
     private JFrame frame = new JFrame("考试系统");
-    private JPanel p_north = new JPanel(new GridLayout(1,2));
+    private JPanel p_north = new JPanel(new GridLayout(1, 2));
     private JPanel p_south = new JPanel(new GridLayout(1, 4));
     private CardLayout card = new CardLayout();
     private JPanel p_center = new JPanel(card);
-    private JPanel p_north_1 = new JPanel(new FlowLayout(FlowLayout.LEFT,10,10));
-    private JPanel p_north_2 = new JPanel(new FlowLayout(FlowLayout.RIGHT,10,10));
+    private JPanel p_north_1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    private JPanel p_north_2 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
     private JLabel l_north_1 = new JLabel();
     private JLabel l_north_2 = new JLabel("考试时间：02:00:00");
     private JTextArea ta_question = null;
@@ -54,10 +51,16 @@ public class Exam implements ActionListener, ItemListener {
     private String[] choice;
     private List<Questions> list;
     private Map<String, String> answer = new HashMap<>();
+    private boolean flag = true;
+    private boolean isStart = false;
+    private Timer timer = new Timer();
+    private int cardnum = 1;
+    private double score;
+
 
     public Exam() {
         p_north_1.add(l_north_1);
-        l_north_2.setFont(new Font("YaHei",Font.PLAIN,14));
+        l_north_2.setFont(new Font("YaHei", Font.PLAIN, 14));
         p_north_2.add(l_north_2);
         p_north.add(p_north_1);
         p_north.add(p_north_2);
@@ -71,6 +74,11 @@ public class Exam implements ActionListener, ItemListener {
         b_next.addActionListener(this);
         b_go.addActionListener(this);
         b_submit.addActionListener(this);
+
+
+        b_submit.setEnabled(false);   //初始化 交卷按钮
+        b_pre.setEnabled(false);
+        b_next.setEnabled(false);
         p_south.add(p_south_2);
         p_south_3.add(l_num);
         p_south_3.add(tf_num);
@@ -82,9 +90,29 @@ public class Exam implements ActionListener, ItemListener {
 
         frame.add(p_south, "South");
         frame.setVisible(true);
-        frame.setSize(650, 500);
-        frame.setLocation(400, 400);
+        frame.setSize(700, 500);
+        frame.setLocation(300, 300);
         frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int i = JOptionPane.showConfirmDialog(frame, "考试还没结束，确认关闭吗？", "提示", JOptionPane.OK_CANCEL_OPTION);
+                if (i == JOptionPane.OK_OPTION) {
+                    new Main(sno, name);
+                    frame.dispose();
+                }
+                if (isStart) {
+                    submit();
+                    int j = JOptionPane.showConfirmDialog(frame, showScore(), "提示", JOptionPane.OK_OPTION);
+                    if (j == JOptionPane.OK_OPTION || j == JOptionPane.CLOSED_OPTION) {
+                        new Main(sno, name);
+                    }
+                }
+
+            }
+        });
 
     }
 
@@ -106,45 +134,57 @@ public class Exam implements ActionListener, ItemListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+//        Thread t = new Thread();
+//        t.start();
 
         if (e.getSource() == b_start) {
+            isStart = true;
+            b_start.setEnabled(false);
+            b_submit.setEnabled(true);
+            b_pre.setEnabled(true);
+            b_next.setEnabled(true);
 
-            java.util.Timer timer = new Timer();
             long start = System.currentTimeMillis();
-           // long end =start+ 2*60*60*1000;
-            long end = start+1*60*1000;
+            // long end =start+ 2*60*60*1000;
+            long end = start + 1 * 60 * 1000;
             timer.schedule(new TimerTask() {
                 StringBuffer buffer = new StringBuffer();
 
                 @Override
                 public void run() {
-                    buffer.delete(0,buffer.length());
+                    buffer.delete(0, buffer.length());
                     long show = end - System.currentTimeMillis();
-                    long h = show/1000/60/60;
-                    long m = show/1000/60%60;
-                    long s = show/1000%60;
-                    buffer = buffer.append("倒计时：").append(h<10?"0":"").append(h).append(":").append(m<10?"0":"").append(m).append(":").append(s<10?"0":"").append(s);
+                    long h = show / 1000 / 60 / 60;
+                    long m = show / 1000 / 60 % 60;
+                    long s = show / 1000 % 60;
+                    buffer = buffer.append("倒计时：").append(h < 10 ? "0" : "").append(h).append(":").append(m < 10 ? "0" : "").append(m).append(":").append(s < 10 ? "0" : "").append(s);
                     l_north_2.setText(buffer.toString());
                 }
             }, 0, 1000);
-            l_north_2.setForeground(new Color(255,0,0));
+            l_north_2.setForeground(new Color(255, 0, 0));
 
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    JOptionPane.showMessageDialog(frame,"距离考试结束还有5分钟","提示",JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "距离考试结束还有5分钟", "提示", JOptionPane.WARNING_MESSAGE);
                 }
-            },new Date(end-1*30*1000));
+            }, new Date(end - 1 * 30 * 1000));
 
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     timer.cancel();
-                    JOptionPane.showMessageDialog(frame,"考试时间结束！","提示",JOptionPane.WARNING_MESSAGE);
+                    flag = false;
                     submit();
+                    int i = JOptionPane.showConfirmDialog(frame, "考试时间结束！", "提示", JOptionPane.WARNING_MESSAGE, JOptionPane.OK_OPTION);
+                    if (i == JOptionPane.OK_OPTION || i == JOptionPane.CLOSED_OPTION) {
+                        int j = JOptionPane.showConfirmDialog(frame, showScore(), "提示", JOptionPane.OK_OPTION);
+                        if (j == JOptionPane.OK_OPTION || j == JOptionPane.CLOSED_OPTION) {
+                            new Main(sno, name);
+                        }
+                    }
                 }
-            },new Date(end));
-
+            }, new Date(end));
 
 
             JPanel[] panel = new JPanel[list.size()];
@@ -165,6 +205,7 @@ public class Exam implements ActionListener, ItemListener {
                 cb_choice = new Checkbox[choice.length];
                 list_cb.add(cb_choice);
                 group_choice = new CheckboxGroup();
+                l_choice = new JLabel("选项");
                 p_choice.add(l_choice);
                 for (int j = 0; j < choice.length; j++) {
                     if (!"multiple selection".equals(note)) {
@@ -182,7 +223,7 @@ public class Exam implements ActionListener, ItemListener {
                 p_que.add(sp_question);
                 panel[i].add(p_que);
                 panel[i].add(p_choice);
-                p_center.add(panel[i], String.valueOf(i));
+                p_center.add(panel[i], String.valueOf(i + 1));
 
             }
 
@@ -192,9 +233,17 @@ public class Exam implements ActionListener, ItemListener {
         }
 
         if (e.getSource() == b_pre) {
+            cardnum--;
+            if (cardnum < 0) {
+                b_pre.setEnabled(false);
+            }
             card.previous(p_center);
         }
         if (e.getSource() == b_next) {
+            cardnum++;
+            if (cardnum > list.size()) {
+                b_next.setEnabled(false);
+            }
             card.next(p_center);
         }
         if (e.getSource() == b_go) {
@@ -202,29 +251,44 @@ public class Exam implements ActionListener, ItemListener {
         }
 
         if (e.getSource() == b_submit) {
-            submit();
+            if (flag) {
+                int i = JOptionPane.showConfirmDialog(frame, "考试时间还没结束，确认交卷吗？", "提示", JOptionPane.OK_CANCEL_OPTION);
+                if (i == JOptionPane.OK_OPTION) {
+                    timer.cancel();
+                    flag = false;
+                    submit();
+                    int j = JOptionPane.showConfirmDialog(frame, showScore(), "提示", JOptionPane.OK_OPTION);
+                    if (j == JOptionPane.OK_OPTION || j == JOptionPane.CLOSED_OPTION) {
+                        new Main(sno, name);
+                    }
+                }
+            }
+
+
         }
 
     }
 
-    private void submit(){
-        double s = Scores.countScore(answer, list);
-        Scores.saveScore(sno, stage, s);
-        p_center.removeAll();
-        JLabel l_score = new JLabel(new StringBuffer().append(name).append(",你好\n你的第").append(stage).append("阶段考试成绩为：").append(s).toString(),JLabel.CENTER);
-        p_center.add(l_score);
+    private void submit() {
+        b_submit.setEnabled(false);
+        score = Scores.countScore(answer, list);
+        Scores.saveScore(sno, stage, score);
+    }
+
+    private String showScore() {
+        return new StringBuffer().append(name).append("同学你好，\n你的第").append(stage).append("阶段考试成绩为：").append(score).toString();
     }
 
     @Override
     public void itemStateChanged(ItemEvent e) {
         StringBuffer buffer = new StringBuffer();
-        for (int j=0;j<list_cb.size();j++){
-            cb_choice = (Checkbox[])list_cb.get(j);
-            buffer.delete(0,buffer.length());
-            for (Checkbox c: cb_choice){
-                buffer.append(c.getState()?"1":"0");
+        for (int j = 0; j < list_cb.size(); j++) {
+            cb_choice = (Checkbox[]) list_cb.get(j);
+            buffer.delete(0, buffer.length());
+            for (Checkbox c : cb_choice) {
+                buffer.append(c.getState() ? "1" : "0");
             }
-            answer.put(String.valueOf(j+1), buffer.toString());
+            answer.put(String.valueOf(j + 1), buffer.toString());
         }
 
     }

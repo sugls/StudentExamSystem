@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -52,7 +54,15 @@ public class Login implements ActionListener {
         frame.setResizable(false);
         frame.setLocation(300, 300);
         frame.setSize(400, 200);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                if (JOptionPane.showConfirmDialog(frame,"确认退出系统吗？","提示",JOptionPane.OK_CANCEL_OPTION)==JOptionPane.OK_OPTION){
+                    System.exit(0);
+                }
+            }
+        });
     }
 
     public static void main(String[] args) {

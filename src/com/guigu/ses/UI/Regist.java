@@ -117,37 +117,15 @@ public class Regist implements ActionListener {
                 if (!"验证成功".equals(msg)) {
                     JOptionPane.showMessageDialog(f_regist, msg, "提示", JOptionPane.WARNING_MESSAGE);
                 } else {
-                    boolean reg = Students.regist(sno, sname, sex, sclass, passwd);
-                    if (reg == true) {
+                    int reg = Students.regist(sno, sname, sex, sclass, passwd);
+                    if (reg == -1) {
+                        JOptionPane.showMessageDialog(f_regist, "学号已存在", "提示", JOptionPane.WARNING_MESSAGE);
+                    }else if (reg == 0) {
 
-                        //JOptionPane.showConfirmDialog(f_regist,"注册成功，是否去登录？","提示",JOptionPane.YES_NO_OPTION);
-                        JButton[] btns = new JButton[]{new JButton("去登陆"), new JButton("取消")};
-                        //JOptionPane  dialog= new JOptionPane("注册成功",JOptionPane.QUESTION_MESSAGE,JOptionPane.YES_NO_OPTION,new ImageIcon(),btns);
-                        JDialog dialog = new JDialog(f_regist, "提示", true);
-                        JLabel meg = new JLabel("注册成功", JLabel.CENTER);
-                        dialog.add(meg);
-                        JPanel p = new JPanel();
-                        p.add(btns[0]);
-                        p.add(btns[1]);
-                        dialog.add(p, "South");
-
-                        dialog.setSize(250, 200);
-                        dialog.setLocation(f_regist.getX() + 50, f_regist.getY() + 60);
-                        dialog.setVisible(true);
-
-                        btns[0].addActionListener(new ActionListener() {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                dialog.dispose();
-                                f_regist.dispose();
-                            }
-                        });
-                        btns[1].addActionListener(new ActionListener() {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                dialog.dispose();
-                            }
-                        });
+                        int i = JOptionPane.showConfirmDialog(f_regist, "注册成功，是否去登录？", "提示", JOptionPane.YES_NO_OPTION);
+                        if (i == JOptionPane.OK_OPTION) {
+                            f_regist.dispose();
+                        }
                     }
                 }
             }

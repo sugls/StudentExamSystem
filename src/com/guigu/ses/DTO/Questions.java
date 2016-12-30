@@ -120,18 +120,57 @@ public class Questions {
         return list;
     }
 
-
+    /**
+     * 解析XML获取List<Questions>
+     *
+     * @param stage
+     * @return
+     */
     public List<Questions> getQusetionsListByStageFromXml(String stage) {
         File que = new File("questions");
         String filename = null;
-        String[] files =  que.list();
-        for (String s:files){
-            while(s.contains("stage"+stage));{
+        String[] files = que.list();
+        for (String s : files) {
+            while (s.contains("stage" + stage)) ;
+            {
                 filename = s;
             }
         }
-       // String filename = new StringBuffer(new SimpleDateFormat("yyyyMMdd").format(new Date())).append("_stage").append(stage).append(".xml").toString();
+        // String filename = new StringBuffer(new SimpleDateFormat("yyyyMMdd").format(new Date())).append("_stage").append(stage).append(".xml").toString();
         return parseExamXml.parseExamXml(filename);
     }
+
+    public static boolean addQuestions(List<Questions> questions) {
+        String sql = "INSERT INTO question(que_no, que_note, que_detail, que_choice, que_answer, stage) VALUES(?,?,?,?,?,?)";
+        int[] i = null;
+        DBUtil dbUtil = new DBUtil();
+        PreparedStatement ps = dbUtil.getPreparedStatement(sql);
+        try {
+            for (Questions q :
+                    questions) {
+                ps.setInt(1, q.getQueno());
+                ps.setString(2, q.getNote());
+                ps.setString(3, q.getDetail());
+                ps.setString(4, q.getChoice());
+                ps.setString(5, q.getAnswer());
+                ps.setString(6, q.getStage());
+                ps.addBatch();
+            }
+            i = ps.executeBatch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        dbUtil.close();
+        return i != null && i.length > 0;
+    }
+
 
 }

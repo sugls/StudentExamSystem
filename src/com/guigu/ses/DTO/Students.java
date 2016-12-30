@@ -22,6 +22,7 @@ public class Students {
 
     private static final String reg_sno = "\\d{4,12}";
     private static final String reg_pwd = "([a-z]|[A-z]|[0-9]){4,20}";
+    private static final String reg_class = "\\A\\p{Alpha}{1}\\d{0,4}";
 
     public Students() {
     }
@@ -112,7 +113,7 @@ public class Students {
                 result[0] = "登录成功";
                 break;
             case 2:
-                result[0] = "用户名错误";
+                result[0] = "学号不存在";
                 break;
             case 3:
                 result[0] = "密码错误";
@@ -132,46 +133,58 @@ public class Students {
      * @param sex 性别，值为 1或2
      * @param sclass 班级
      * @param passwd 密码
-     * @return 布尔值
+     * @return -1 表示学号重复 1 表示注册成功
      */
-    public static boolean regist(String sno,String name,String sex,String sclass,String passwd){
+    public static int regist(String sno,String name,String sex,String sclass,String passwd){
         int result = 0;
         DBUtil dbUtil = new DBUtil();
-        String sql = "{call add_student(?,?,?,?,?)}";
-        PreparedStatement ps = dbUtil.getCallableStatement(sql);
+        String sql = "{call add_student(?,?,?,?,?,?)}";
+        CallableStatement cs = dbUtil.getCallableStatement(sql);
         try {
-            ps.setString(1,sno);
-            ps.setString(2,name);
-            ps.setString(3,sex);
-            ps.setString(4,sclass);
-            ps.setString(5,passwd);
-            result = ps.executeUpdate();
+            cs.setString(1,sno);
+            cs.setString(2,name);
+            cs.setString(3,sex);
+            cs.setString(4,sclass);
+            cs.setString(5,passwd);
+            cs.registerOutParameter(6,Types.INTEGER);
+            cs.executeUpdate();
+            result  = cs.getInt(6);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if(ps!=null){
+            if(cs!=null){
                 try {
-                    ps.close();
+                    cs.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
         }
         dbUtil.close();
-        return result != 0;
+        return result;
     }
 
-
+    /**
+     * 注册验证
+     * @param infos 注册信息
+     * @return
+     */
     public static String checkRegist(String[] infos){
         String result = "验证成功";
         Pattern p_sno = Pattern.compile(reg_sno);
         Pattern p_pwd = Pattern.compile(reg_pwd);
+        Pattern p_class = Pattern.compile(reg_class);
 
         Matcher m_sno = p_sno.matcher(infos[0]);
+        Matcher m_class = p_class.matcher(infos[3]);
         Matcher m_pwd = p_pwd.matcher(infos[4]);
+
         if (!m_sno.matches()) {
             result = "学号必须为4-12位数字";
-        } else if (!m_pwd.matches()){
+        }else if (!m_class.matches()){
+            result = "班级必须为一个字母开头接0到4个数字";
+        }
+        else if (!m_pwd.matches()){
             result = "密码必须为4-20位数字或英文字符";
         }else if (!infos[4].equals(infos[5])){
             result = "两次密码输入不相同";
