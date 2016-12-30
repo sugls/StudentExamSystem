@@ -1,0 +1,619 @@
+<?xml version="1.0" encoding="utf-8"?>
+<questions>
+<question id="1" stage="1">
+	<note>multiple selection</note>
+	<detail>
+	Given
+	1	public class X{
+	2		public Object m(){
+	3			Object o = new Float(3.14F);
+	4			Object [] oa = new Object[1];
+	5			oa[0] = o;
+	6			o=null;
+	7			return oa[0];
+	8		}
+	9	}
+	When is the Float object, created in line 3,eligible for garbage collection?
+	</detail>
+	<choice>
+	just after line 5
+	just after line 6
+	just after line 7(that is,as the method returns)
+	never in this method
+	</choice>
+	<answer>0001</answer>
+</question>
+<question id="2" stage="1">
+	<note>multiple selection</note>
+	<detail>
+	Consider the following classes:
+		public class Test {
+			public static void test() {
+				this.print();
+			}
+			public static void print() {
+				System.out.println("Test");
+			}
+			public static void main(String args []) {
+				test();
+			}
+		}
+	What is the result of compiling and running this class?
+	</detail>
+	<choice>
+	The string Test is printed to the standard out. 
+	A runtime exception is raised stating that an object has not been created. 
+	Nothing is printed to the standard output. 
+	An exception is raised stating that the method test cannot be found. 
+	An exception is raised stating that the variable this can only be used within an instance. 
+	The class fails to compile stating that the variable this is undefined.
+	</choice>
+	<answer>000001</answer>
+</question>
+<question id="3" stage="1">
+	<note>single selection</note>
+	<detail>
+	Which of these is the correct format to use to create the literal char value a?
+	A)	'a' 
+	B)	"a" 
+	C)	new Character(a) 
+	D)	\000a 
+	Select the most appropriate answer.
+	</detail>
+	<choice>
+	A
+	B
+	C
+	D
+	</choice>
+	<answer>1000</answer>
+</question>
+<question id="4" stage="1">
+	<note>single selection</note>
+	<detail>
+	What will be printed out if this code is run with the following command line
+	java  myprog  good  morning
+	public class myprog{
+		public static void main(String argv[]) 
+		{
+			System.out.println(argv[2])
+		}
+	}
+	Select the most appropriate answer.
+	</detail>
+	<choice>
+	myprog
+	good
+	morning
+	Exception raised: "java.lang.ArrayIndexOutOfBoundsException: 2"
+	</choice>
+	<answer>0001</answer>
+</question>
+<question id="5" stage="1">
+	<note>single selection</note>
+	<detail>
+	What will happen if you try to compile and execute B's main() method?
+	class A {
+	   int i;
+	   A(int i) {
+	      this.i = i * 2;
+	   }
+	}
+	class B extends A {
+	   public static void main(String[] args) {
+	      B b = new B(2);
+	   }
+	   B(int i) {
+	      System.out.println(i);
+	   }
+	}
+	Select the one right answer.
+	</detail>
+	<choice>
+	The instance variable i is set to 4
+	The instance variable i is set to 2
+	The instance variable i is set to 0
+	This code will not compile
+	</choice>
+	<answer>0001</answer>
+</question>
+<question id="6" stage="1">
+	<note>single selection</note>
+	<detail>
+	What happens when you try to compile and run the following program?
+	class Mystery {
+	   String s;
+	   public static void main(String[] args) {
+	      Mystery m = new Mystery();
+	      m.go();
+	   }
+	   void Mystery() {
+	      s = "constructor";
+	   }
+	   void go() {
+	      System.out.println(s);
+	   }
+	}
+	Select the one right answer.
+	</detail>
+	<choice>
+	this code will not compile
+	this code compiles but throws an exception at runtime
+	this code runs but nothing appears in the standard output
+	this code runs and "constructor" in the standard output
+	this code runs and writes "null" in the standard output
+	</choice>
+	<answer>00001</answer>
+</question>
+<question id="7" stage="1">
+	<note>single selection</note>
+	<detail>
+	public class Foo{
+		public static void main(String sgf[]){
+			StringBuffer a = new StringBuffer("A");
+			StringBuffer b = new StringBuffer("B");
+			operate(a,b);
+			System.out.println(a+","+b);
+		}
+		static void operate(StringBuffer x,StringBuffer y){
+			x.append(y);
+			y=x;
+		}
+	}
+	What is the result?
+	</detail>
+	<choice>
+	The code compiles and prints "A.B".
+	The code compiles and prints "A.A".
+	The code compiles and prints "B.B".
+	The code compiles and prints "AB.B".
+	The code compiles and prints "AB.AB".
+	</choice>
+	<answer>00010</answer>
+</question>
+<question id="8" stage="1">
+	<note>multiple selection</note>
+	<detail>
+	Which of the following statements will cause a compiler error.
+	</detail>
+	<choice>
+	float F=4096.0;
+	double D=4096.0;
+	byte B=4096;
+	char C=4096;
+	</choice>
+	<answer>1010</answer>
+</question>
+<question id="9" stage="1">
+	<note>single selection</note>
+	<detail>
+	Consider the following program:
+	public class Test { 
+		public static void main (String args []) {
+			boolean a = false;
+			if (a = true)
+				System.out.println("Hello");
+			else
+				System.out.println("Goodbye");
+			}
+		}
+	}
+	What is the result:
+	</detail>
+	<choice>
+	Program produces no output but terminates correctly.
+	Program does not terminate.
+	Prints out "Hello"
+	Prints out "Goodbye"
+	</choice>
+	<answer>0010</answer>
+</question>
+<question id="10" stage="1">
+	<note>single selection</note>
+	<detail>
+	Given the following class definition: 
+		class A{
+			protected int i;
+			A(int i){
+				this.i=i;
+				}
+			}
+	which of the following would be a valid inner class for this class?
+	Select  all valid answers:
+	</detail>
+	<choice>
+	class B{}
+	class B extends A{}
+	class B extends A{ B(){System.out.println("i="+i);} }
+	class B{  class A{}	}
+	class A{}
+	</choice>
+	<answer>10000</answer>
+</question>
+<question id="11" stage="2">
+	<note>single selection</note>
+	<detail>
+	What happens on trying to compile and run the following code?
+	public class EqualsTest{
+		public static void main(String args[]){
+			Object A=new Long(7);
+			Long L=new Long(7);
+			if(A.equals(L)) 
+				System.out.println("Equal");
+			else 
+				System.out.println("Not Equal");
+			}
+		}
+	}
+	</detail>
+	<choice>
+	The program compiles and prints "Equal".
+	The program compiles and prints "Not Equal".
+	The compiler objects to line 5.
+	A runtime cast error occurs at line 5.
+	</choice>
+	<answer>1000</answer>
+</question>
+<question id="12" stage="2">
+	<note>single selection</note>
+	<detail>
+	Why won't the following class compile?
+	class A {
+	   private int x;
+	   public static void main(String[] args) {
+	      new B();
+	   }
+	   class B {
+	      B() {
+	         System.out.println(x);
+	      }
+	   }
+	}
+	Select the one right answer.
+	</detail>
+	<choice>
+	Class B tries to access a private variable defined in its ouer class.
+	Class A attempts to create an instance of B when there is no current instance of class A.
+	Class B's constructor must be public.
+	</choice>
+	<answer>010</answer>
+</question>
+<question id="13" stage="2">
+	<note>single selection</note>
+	<detail>
+	What happens on trying to compile the following code?
+	interface Foo{
+		int k=0;
+	}
+	public class Test implements Foo{
+		public static void main(String args[]){
+			int i;
+			Test test = new Test();
+			i=test.k;
+			i=Test.k;
+			i=Foo.k;
+		}
+	}
+	</detail>
+	<choice>
+	Compilation succeeds.
+	An error at line 2 causes compilation to fail.
+	An error at line 9 causes compilation to fail.
+	An error at line 10 causes compilation to fail.
+	An error at line 11 causes compilation to fail.
+	</choice>
+	<answer>10000</answer>
+</question>
+<question id="14" stage="2">
+	<note>multiple selection</note>
+	<detail>
+	Which interface implementations can you add as listeners for a TextField object?Select all valid answers.
+	</detail>
+	<choice>
+	ActionListener
+	FocusListener
+	MouseMotionListener
+	WindowListener
+	ContainerListener
+	</choice>
+	<answer>11100</answer>
+</question>
+<question id="15" stage="2">
+	<note>multiple selection</note>
+	<detail>
+	Which statements are true about Listeners?
+	</detail>
+	<choice>
+	At most one listener can be added to any simple Component.
+	The return value from a listener is used to control the invocation of other listener
+	if multiple listeners are added to a single component, they must all be made friends to each other
+	if multiple listeners are added to single component, the order of invocation of the listener is not specified.
+	In the AWT, listener methods generally take an argument, which is an instance of some subclass of java.awt.AWTEvent class.
+	</choice>
+	<answer>00011</answer>
+</question>
+<question id="16" stage="2">
+	<note>single selection</note>
+	<detail>
+	Which method you define as the starting point of new thread in a class from which the new thread can be excution?
+	</detail>
+	<choice>
+	public void start()	
+	public void run()	
+	public void int()
+	public static void main(String args[])	
+	public void runnable()
+	</choice>
+	<answer>01000</answer>
+</question>
+<question id="17" stage="2">
+	<note>single selection</note>
+	<detail>
+	Which modifier should be applied to a method for the lock of object this to be obtained prior to excution any of the method body?
+	</detail>
+	<choice>
+	synchronized
+	abstract	
+	final
+	static
+	public
+	</choice>
+	<answer>10000</answer>
+</question>
+<question id="18" stage="2">
+	<note>multiple selection</note>
+	<detail>
+	Give the following method:
+		public void example(){
+			try{
+				unsafe();
+				System.out.println("Test1");
+			}catch(SafeException e){System.out.println("Test 2");
+			}finally{System.out.println("Test 3");}
+			System.out.println("Test 4");
+	Which will display if method unsafe () run normally?
+	</detail>
+	<choice>
+	Test 1	
+	Test 2	
+	Test 3	
+	Test 4
+	</choice>
+	<answer>1011</answer>
+</question>
+<question id="19" stage="2">
+	<note>single selection</note>
+	<detail>
+	Carefully examine the following code:
+	
+	public class StaticTest {
+		static {
+			System.out.println("Hi there");
+		}
+		public void print() {
+			System.out.println("Hello");
+		}
+		public static void main(String args []) {
+			StaticTest st1 = new StaticTest();
+			st1.print();
+			StaticTest st2 = new StaticTest();
+			st2.print();
+		}
+	}
+	When will the string "Hi there" be printed?
+	</detail>
+	<choice>
+	Never. 
+	Each time a new instance is created. 
+	Once when the class is first loaded into the Java virtual machine. 
+	Only when the static method is called explicitly.
+	</choice>
+	<answer>0010</answer>
+</question>
+<question id="20" stage="2">
+	<note>single selection</note>
+	<detail>
+	A class design requires that a member variable should be accessible only by same package, which modifer word should be used?
+	</detail>
+	<choice>
+	protected	
+	public	
+	no modifer	
+	private
+	</choice>
+	<answer>0010</answer>
+</question>
+	<question id="21" stage="3">
+		<note>single selection</note>
+		<detail>
+			What happens on trying to compile and run the following code?
+			public class EqualsTest{
+			public static void main(String args[]){
+			Object A=new Long(7);
+			Long L=new Long(7);
+			if(A.equals(L))
+			System.out.println("Equal");
+			else
+			System.out.println("Not Equal");
+			}
+			}
+			}
+		</detail>
+		<choice>
+			The program compiles and prints "Equal".
+			The program compiles and prints "Not Equal".
+			The compiler objects to line 5.
+			A runtime cast error occurs at line 5.
+		</choice>
+		<answer>1000</answer>
+	</question>
+	<question id="22" stage="3">
+		<note>single selection</note>
+		<detail>
+			Why won't the following class compile?
+			class A {
+			private int x;
+			public static void main(String[] args) {
+			new B();
+			}
+			class B {
+			B() {
+			System.out.println(x);
+			}
+			}
+			}
+			Select the one right answer.
+		</detail>
+		<choice>
+			Class B tries to access a private variable defined in its ouer class.
+			Class A attempts to create an instance of B when there is no current instance of class A.
+			Class B's constructor must be public.
+		</choice>
+		<answer>010</answer>
+	</question>
+	<question id="23" stage="3">
+		<note>single selection</note>
+		<detail>
+			What happens on trying to compile the following code?
+			interface Foo{
+			int k=0;
+			}
+			public class Test implements Foo{
+			public static void main(String args[]){
+			int i;
+			Test test = new Test();
+			i=test.k;
+			i=Test.k;
+			i=Foo.k;
+			}
+			}
+		</detail>
+		<choice>
+			Compilation succeeds.
+			An error at line 2 causes compilation to fail.
+			An error at line 9 causes compilation to fail.
+			An error at line 10 causes compilation to fail.
+			An error at line 11 causes compilation to fail.
+		</choice>
+		<answer>10000</answer>
+	</question>
+	<question id="24" stage="3">
+		<note>multiple selection</note>
+		<detail>
+			Which interface implementations can you add as listeners for a TextField object?Select all valid answers.
+		</detail>
+		<choice>
+			ActionListener
+			FocusListener
+			MouseMotionListener
+			WindowListener
+			ContainerListener
+		</choice>
+		<answer>11100</answer>
+	</question>
+	<question id="25" stage="3">
+		<note>multiple selection</note>
+		<detail>
+			Which statements are true about Listeners?
+		</detail>
+		<choice>
+			At most one listener can be added to any simple Component.
+			The return value from a listener is used to control the invocation of other listener
+			if multiple listeners are added to a single component, they must all be made friends to each other
+			if multiple listeners are added to single component, the order of invocation of the listener is not specified.
+			In the AWT, listener methods generally take an argument, which is an instance of some subclass of java.awt.AWTEvent class.
+		</choice>
+		<answer>00011</answer>
+	</question>
+	<question id="26" stage="3">
+		<note>single selection</note>
+		<detail>
+			Which method you define as the starting point of new thread in a class from which the new thread can be excution?
+		</detail>
+		<choice>
+			public void start()
+			public void run()
+			public void int()
+			public static void main(String args[])
+			public void runnable()
+		</choice>
+		<answer>01000</answer>
+	</question>
+	<question id="27" stage="3">
+		<note>single selection</note>
+		<detail>
+			Which modifier should be applied to a method for the lock of object this to be obtained prior to excution any of the method body?
+		</detail>
+		<choice>
+			synchronized
+			abstract
+			final
+			static
+			public
+		</choice>
+		<answer>10000</answer>
+	</question>
+	<question id="28" stage="3">
+		<note>multiple selection</note>
+		<detail>
+			Give the following method:
+			public void example(){
+			try{
+			unsafe();
+			System.out.println("Test1");
+			}catch(SafeException e){System.out.println("Test 2");
+			}finally{System.out.println("Test 3");}
+			System.out.println("Test 4");
+			Which will display if method unsafe () run normally?
+		</detail>
+		<choice>
+			Test 1
+			Test 2
+			Test 3
+			Test 4
+		</choice>
+		<answer>1011</answer>
+	</question>
+	<question id="29" stage="3">
+		<note>single selection</note>
+		<detail>
+			Carefully examine the following code:
+
+			public class StaticTest {
+			static {
+			System.out.println("Hi there");
+			}
+			public void print() {
+			System.out.println("Hello");
+			}
+			public static void main(String args []) {
+			StaticTest st1 = new StaticTest();
+			st1.print();
+			StaticTest st2 = new StaticTest();
+			st2.print();
+			}
+			}
+			When will the string "Hi there" be printed?
+		</detail>
+		<choice>
+			Never.
+			Each time a new instance is created.
+			Once when the class is first loaded into the Java virtual machine.
+			Only when the static method is called explicitly.
+		</choice>
+		<answer>0010</answer>
+	</question>
+	<question id="30" stage="3">
+		<note>single selection</note>
+		<detail>
+			A class design requires that a member variable should be accessible only by same package, which modifer word should be used?
+		</detail>
+		<choice>
+			protected
+			public
+			no modifer
+			private
+		</choice>
+		<answer>0010</answer>
+	</question>
+</questions>
