@@ -37,6 +37,9 @@ public class Login implements ActionListener {
         p_south.add(b_login);
         p_south.add(b_regist);
         frame.add(p_south, "South");
+        int _absc;
+        int variable2;
+        int _3_ = 1;
 
         p_stuno.add(l_stuno);
         p_stuno.add(tf_stuno);

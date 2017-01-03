@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Vector;
 
 /**
+ *
  * Created by Lsc on 2016/12/27.
  */
 public class Questions {
@@ -121,10 +122,10 @@ public class Questions {
     }
 
     /**
-     * 解析XML获取List<Questions>
+     * 通过阶段号获取试题集合
      *
-     * @param stage
-     * @return
+     * @param stage 阶段 String
+     * @return 试题集合List
      */
     public List<Questions> getQusetionsListByStageFromXml(String stage) {
         File que = new File("questions");

@@ -40,7 +40,8 @@ public class test1 {
 
 
     public static void main(String[] args) {
-        insert();
+        //insert();
+        System.out.println(-10%-3);
     }
 
 }

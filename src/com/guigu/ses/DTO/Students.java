@@ -80,7 +80,7 @@ public class Students {
      *
      * @param sno    学号
      * @param passwd 密码
-     * @return
+     * @return 长度为2的String数组result, result[0]表示登录状态，result[1]表是用户姓名
      */
     public static String[] checkLogin(String sno, String passwd) {
         String result[] = new String[2];
@@ -94,8 +94,8 @@ public class Students {
             cs.registerOutParameter(3, Types.INTEGER);
             cs.registerOutParameter(4,Types.CHAR);
             cs.execute();
-            login_status = cs.getInt(3);
-            result[1] = cs.getString(4);
+            login_status = cs.getInt(3);  //登录状态
+            result[1] = cs.getString(4);  //用户姓名
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -167,7 +167,7 @@ public class Students {
     /**
      * 注册验证
      * @param infos 注册信息
-     * @return
+     * @return 验证信息
      */
     public static String checkRegist(String[] infos){
         String result = "验证成功";

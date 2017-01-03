@@ -106,8 +106,10 @@ public class Exam implements ActionListener, ItemListener {
                 if (isStart) {
                     submit();
                     int j = JOptionPane.showConfirmDialog(frame, showScore(), "提示", JOptionPane.OK_OPTION);
-                    if (j == JOptionPane.OK_OPTION || j == JOptionPane.CLOSED_OPTION) {
+                    if (j == JOptionPane.OK_OPTION) {
                         new Main(sno, name);
+                    }else{
+                        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                     }
                 }
 
@@ -146,7 +148,7 @@ public class Exam implements ActionListener, ItemListener {
 
             long start = System.currentTimeMillis();
             // long end =start+ 2*60*60*1000;
-            long end = start + 1 * 60 * 1000;
+            long end = start + 1 * 60 * 1000;  //测试倒计时
             timer.schedule(new TimerTask() {
                 StringBuffer buffer = new StringBuffer();
 
@@ -233,17 +235,18 @@ public class Exam implements ActionListener, ItemListener {
         }
 
         if (e.getSource() == b_pre) {
-            cardnum--;
-            if (cardnum < 0) {
+            if (cardnum <=1 ) {
                 b_pre.setEnabled(false);
             }
+            cardnum--;
             card.previous(p_center);
         }
         if (e.getSource() == b_next) {
-            cardnum++;
-            if (cardnum > list.size()) {
+
+            if (cardnum >= list.size()) {
                 b_next.setEnabled(false);
             }
+            cardnum++;
             card.next(p_center);
         }
         if (e.getSource() == b_go) {
@@ -260,6 +263,7 @@ public class Exam implements ActionListener, ItemListener {
                     int j = JOptionPane.showConfirmDialog(frame, showScore(), "提示", JOptionPane.OK_OPTION);
                     if (j == JOptionPane.OK_OPTION || j == JOptionPane.CLOSED_OPTION) {
                         new Main(sno, name);
+                        frame.dispose();
                     }
                 }
             }
