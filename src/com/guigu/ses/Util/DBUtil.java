@@ -6,13 +6,17 @@ import java.sql.*;
 import java.util.Properties;
 
 /**
+ * 数据库工具类
+ * 获取sql语句通道实例
  * Created by Lsc on 2016/12/27.
  */
 public class DBUtil {
 
     private Connection connection;
 
-
+    /**
+     * 构造方法，获得数据库连接实例
+     */
     public DBUtil() {
         Properties ps = new Properties();
         InputStream inputStream = super.getClass().getClassLoader().getResourceAsStream("database.properties");
@@ -29,6 +33,11 @@ public class DBUtil {
         }
     }
 
+    /**
+     * 获取 PreparedStatement sql通道实例
+     * @param sql 待执行的sql语句
+     * @return PreparedStatement 实例
+     */
     public PreparedStatement getPreparedStatement(String sql){
         PreparedStatement preparedStatement = null;
         try {
@@ -39,6 +48,11 @@ public class DBUtil {
         return preparedStatement;
     }
 
+    /**
+     * 获取 CallableStatement 实例
+     * @param sql 待执行的sql语句
+     * @return CallableStatement 实例
+     */
     public CallableStatement getCallableStatement(String sql){
         CallableStatement callableStatement = null;
         try {
@@ -49,6 +63,9 @@ public class DBUtil {
         return callableStatement;
     }
 
+    /**
+     * 关闭数据库连接
+     */
     public void close(){
         if (connection!=null){
             try {

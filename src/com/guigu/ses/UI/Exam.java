@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Timer;
 
 /**
+ * 考试界面
  * Created by Lsc on 2016/12/27.
  */
 public class Exam implements ActionListener, ItemListener {
@@ -79,6 +80,7 @@ public class Exam implements ActionListener, ItemListener {
         b_submit.setEnabled(false);   //初始化 交卷按钮
         b_pre.setEnabled(false);
         b_next.setEnabled(false);
+        b_go.setEnabled(false);
         p_south.add(p_south_2);
         p_south_3.add(l_num);
         p_south_3.add(tf_num);
@@ -91,64 +93,52 @@ public class Exam implements ActionListener, ItemListener {
         frame.add(p_south, "South");
         frame.setVisible(true);
         frame.setSize(700, 500);
-        frame.setLocation(300, 300);
+        frame.setLocation(400, 300);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                int i = JOptionPane.showConfirmDialog(frame, "考试还没结束，确认关闭吗？", "提示", JOptionPane.OK_CANCEL_OPTION);
-                if (i == JOptionPane.OK_OPTION) {
-                    new Main(sno, name);
-                    frame.dispose();
-                }
-                if (isStart) {
-                    submit();
-                    int j = JOptionPane.showConfirmDialog(frame, showScore(), "提示", JOptionPane.OK_OPTION);
-                    if (j == JOptionPane.OK_OPTION) {
-                        new Main(sno, name);
-                    }else{
-                        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-                    }
-                }
-
+                showConfirmSubmitDialog();
             }
         });
 
     }
 
+    /**
+     * 构造带有学生姓名，考试阶段，和学号的考试界面
+     * @param name 姓名
+     * @param stage 阶段好
+     * @param sno 学号
+     */
     public Exam(String name, String stage, String sno) {
         this();
         this.name = name;
         this.sno = sno;
         this.stage = stage;
         l_north_1.setText(name + "同学，第" + stage + "阶段考试");
-        list = Questions.getQuestionsByStage(stage);
+        list = Questions.getQusetionsListByStageFromXml(stage);
         p_card = new JPanel[list.size()];
 
     }
 
-
-    public static void main(String[] args) {
-        new Exam();
-    }
-
+    /**
+     * 监听方法
+     * @param e 事件
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
-//        Thread t = new Thread();
-//        t.start();
 
         if (e.getSource() == b_start) {
             isStart = true;
             b_start.setEnabled(false);
             b_submit.setEnabled(true);
-            b_pre.setEnabled(true);
-            b_next.setEnabled(true);
+            b_go.setEnabled(true);
 
             long start = System.currentTimeMillis();
-            // long end =start+ 2*60*60*1000;
-            long end = start + 1 * 60 * 1000;  //测试倒计时
+            long end =start+ 2*60*60*1000;
+           //long end = start + 1*60*1000;
             timer.schedule(new TimerTask() {
                 StringBuffer buffer = new StringBuffer();
 
@@ -170,21 +160,17 @@ public class Exam implements ActionListener, ItemListener {
                 public void run() {
                     JOptionPane.showMessageDialog(frame, "距离考试结束还有5分钟", "提示", JOptionPane.WARNING_MESSAGE);
                 }
-            }, new Date(end - 1 * 30 * 1000));
+            }, new Date(end - 5 * 60 * 1000));
 
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     timer.cancel();
-                    flag = false;
                     submit();
-                    int i = JOptionPane.showConfirmDialog(frame, "考试时间结束！", "提示", JOptionPane.WARNING_MESSAGE, JOptionPane.OK_OPTION);
-                    if (i == JOptionPane.OK_OPTION || i == JOptionPane.CLOSED_OPTION) {
-                        int j = JOptionPane.showConfirmDialog(frame, showScore(), "提示", JOptionPane.OK_OPTION);
-                        if (j == JOptionPane.OK_OPTION || j == JOptionPane.CLOSED_OPTION) {
-                            new Main(sno, name);
-                        }
-                    }
+                    JOptionPane.showMessageDialog(frame,"考试时间结束","提示",JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(frame,showScore(),"提示",JOptionPane.INFORMATION_MESSAGE);
+                    new Main(sno, name);
+                    frame.dispose();
                 }
             }, new Date(end));
 
@@ -235,50 +221,79 @@ public class Exam implements ActionListener, ItemListener {
         }
 
         if (e.getSource() == b_pre) {
-            if (cardnum <=1 ) {
-                b_pre.setEnabled(false);
-            }
             cardnum--;
             card.previous(p_center);
         }
         if (e.getSource() == b_next) {
-
-            if (cardnum >= list.size()) {
-                b_next.setEnabled(false);
-            }
             cardnum++;
             card.next(p_center);
         }
         if (e.getSource() == b_go) {
+            int i = 0;
+            try{
+                i = Integer.parseInt(tf_num.getText().trim());
+                if (i>list.size()||i<=0){
+                    JOptionPane.showMessageDialog(frame,"题号超出范围","提示",JOptionPane.INFORMATION_MESSAGE);
+                }
+            } catch (NumberFormatException e1){
+                JOptionPane.showMessageDialog(frame,"请输入正确的题号","提示",JOptionPane.INFORMATION_MESSAGE);
+            }
             card.show(p_center, tf_num.getText().trim());
+            if (i!=0){
+                cardnum = i;
+            }
         }
 
         if (e.getSource() == b_submit) {
-            if (flag) {
-                int i = JOptionPane.showConfirmDialog(frame, "考试时间还没结束，确认交卷吗？", "提示", JOptionPane.OK_CANCEL_OPTION);
-                if (i == JOptionPane.OK_OPTION) {
-                    timer.cancel();
-                    flag = false;
-                    submit();
-                    int j = JOptionPane.showConfirmDialog(frame, showScore(), "提示", JOptionPane.OK_OPTION);
-                    if (j == JOptionPane.OK_OPTION || j == JOptionPane.CLOSED_OPTION) {
-                        new Main(sno, name);
-                        frame.dispose();
-                    }
-                }
-            }
-
-
+            showConfirmSubmitDialog();
         }
 
+        if (cardnum<=1){
+            b_pre.setEnabled(false);
+        }
+        if (cardnum > 1 ) {
+            b_pre.setEnabled(true);
+        }
+        if (cardnum < list.size()) {
+            b_next.setEnabled(true);
+        }
+        if (cardnum>=list.size()){
+            b_next.setEnabled(false);
+        }
     }
 
+    /**
+     * 提交分数到数据库
+     */
     private void submit() {
         b_submit.setEnabled(false);
         score = Scores.countScore(answer, list);
         Scores.saveScore(sno, stage, score);
     }
 
+    private void showConfirmSubmitDialog(){
+        int i = JOptionPane.showConfirmDialog(frame, "考试还没结束，确认关闭吗？", "提示", JOptionPane.OK_CANCEL_OPTION);
+        if (i == JOptionPane.OK_OPTION) {
+            if (isStart) {
+                timer.cancel();
+                submit();
+                JOptionPane.showMessageDialog(frame,showScore(),"提示",JOptionPane.INFORMATION_MESSAGE);
+
+                new Main(sno, name);
+                frame.dispose();
+
+            } else {
+                new Main(sno, name);
+                frame.dispose();
+            }
+        } else {
+            frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        }
+    }
+    /**
+     * 显示分数
+     * @return 提示分数信息
+     */
     private String showScore() {
         return new StringBuffer().append(name).append("同学你好，\n你的第").append(stage).append("阶段考试成绩为：").append(score).toString();
     }

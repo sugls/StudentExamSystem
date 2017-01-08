@@ -7,13 +7,11 @@ import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
 /**
- *
+ * 试题表 DTO
  * Created by Lsc on 2016/12/27.
  */
 public class Questions {
@@ -85,6 +83,11 @@ public class Questions {
         this.stage = stage;
     }
 
+    /**
+     * 通过阶段号从数据库中读取试题
+     * @param stage 阶段号
+     * @return 该阶段试题列表
+     */
     public static List<Questions> getQuestionsByStage(String stage) {
         List<Questions> list = new Vector<>();
         String sql = "SELECT que_no, que_note, que_detail, que_choice, que_answer FROM question WHERE stage = ?";
@@ -122,25 +125,28 @@ public class Questions {
     }
 
     /**
-     * 通过阶段号获取试题集合
-     *
-     * @param stage 阶段 String
-     * @return 试题集合List
+     * 通过阶段号读取该阶段xml试题文件中的试题
+     * @param stage 阶段号
+     * @return 试题列表
      */
-    public List<Questions> getQusetionsListByStageFromXml(String stage) {
-        File que = new File("questions");
+    public static List<Questions> getQusetionsListByStageFromXml(String stage) {
+        String path = "questions/";
+        File que = new File(path);
         String filename = null;
         String[] files = que.list();
         for (String s : files) {
-            while (s.contains("stage" + stage)) ;
-            {
+            if (s.contains("stage" + stage)) {
                 filename = s;
             }
         }
-        // String filename = new StringBuffer(new SimpleDateFormat("yyyyMMdd").format(new Date())).append("_stage").append(stage).append(".xml").toString();
-        return parseExamXml.parseExamXml(filename);
+        return parseExamXml.parseExamXml(path+filename);
     }
 
+    /**
+     * 批量添加试题到数据库试题表中
+     * @param questions 试题列表
+     * @return true or false
+     */
     public static boolean addQuestions(List<Questions> questions) {
         String sql = "INSERT INTO question(que_no, que_note, que_detail, que_choice, que_answer, stage) VALUES(?,?,?,?,?,?)";
         int[] i = null;
@@ -172,6 +178,4 @@ public class Questions {
         dbUtil.close();
         return i != null && i.length > 0;
     }
-
-
 }

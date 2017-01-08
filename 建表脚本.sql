@@ -1,3 +1,4 @@
+﻿-- 学生表
 CREATE TABLE student
 (
   stu_no     VARCHAR2(12) PRIMARY KEY,
@@ -6,7 +7,7 @@ CREATE TABLE student
   stu_class  VARCHAR2(5)  NOT NULL,
   stu_passwd VARCHAR2(20) NOT NULL
 );
-DROP TABLE student CASCADE CONSTRAINT ;
+-- 试题表
 CREATE TABLE question
 (
   que_no     NUMBER(3) PRIMARY KEY,
@@ -14,10 +15,9 @@ CREATE TABLE question
   que_detail VARCHAR2(1024),
   que_choice VARCHAR2(1024),
   que_answer VARCHAR2(6),
-  stage      NUMBER(1)
+  stage      CHAR(1)
 );
-ALTER TABLE question
-  ADD stage CHAR(1);
+-- 学生分数表
 CREATE TABLE score
 (
   stu_no NUMBER(12) REFERENCES student (stu_no),
@@ -25,7 +25,4 @@ CREATE TABLE score
   score  NUMBER(3),
   CONSTRAINT score_stu_no_stage_pk PRIMARY KEY (stu_no, stage)
 );
-ALTER TABLE score
-  ADD score NUMBER(3);
-ALTER TABLE question MODIFY stage CHAR(1);
 

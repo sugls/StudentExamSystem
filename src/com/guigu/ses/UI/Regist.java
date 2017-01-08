@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
+ * 注册界面
  * Created by Lsc on 2016/12/27.
  */
 public class Regist implements ActionListener {
@@ -82,7 +83,7 @@ public class Regist implements ActionListener {
 
         f_regist.setVisible(true);
         f_regist.setSize(300, 350);
-        f_regist.setLocation(350, 250);
+        f_regist.setLocation(450, 250);
         f_regist.setResizable(false);
 
     }
@@ -140,9 +141,4 @@ public class Regist implements ActionListener {
             pf_confirm.setText("");
         }
     }
-
-    /*public static void main(String[] args) {
-        JFrame.setDefaultLookAndFeelDecorated(true);
-        new Regist();
-    }*/
 }

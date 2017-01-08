@@ -7,14 +7,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by Administrator on 2016/12/27.
+ * 登录界面
+ * Created by Lsc on 2016/12/27.
  */
 public class Login implements ActionListener {
 
@@ -37,9 +36,6 @@ public class Login implements ActionListener {
         p_south.add(b_login);
         p_south.add(b_regist);
         frame.add(p_south, "South");
-        int _absc;
-        int variable2;
-        int _3_ = 1;
 
         p_stuno.add(l_stuno);
         p_stuno.add(tf_stuno);
@@ -55,19 +51,15 @@ public class Login implements ActionListener {
 
         frame.setVisible(true);
         frame.setResizable(false);
-        frame.setLocation(300, 300);
+        frame.setLocation(400, 300);
         frame.setSize(400, 200);
-        frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                if (JOptionPane.showConfirmDialog(frame,"确认退出系统吗？","提示",JOptionPane.OK_CANCEL_OPTION)==JOptionPane.OK_OPTION){
-                    System.exit(0);
-                }
-            }
-        });
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    /**
+     * 系统主入口
+     * @param args 启动参数
+     */
     public static void main(String[] args) {
         JFrame.setDefaultLookAndFeelDecorated(true);
         new Login();
@@ -91,15 +83,6 @@ public class Login implements ActionListener {
                 String[] msg = Students.checkLogin(sno, passwd);
                 if ("登录成功".equals(msg[0])) {
                     new Main(sno,msg[1]);
-                    File que = new File("questions");
-                    String[] q = que.list();
-                    for (String s:q){
-                        new File("questions/"+s).delete();
-                    }
-                    String date = new SimpleDateFormat("yyyyMMdd").format(new Date()).toString();
-                    buildExamXml.createXmlFile("questions/"+ date +"_stage1.xml","1");
-                    buildExamXml.createXmlFile("questions/"+ date +"_stage2.xml","2");
-                    buildExamXml.createXmlFile("questions/"+ date +"_stage3.xml","3");
                     frame.dispose();
                 } else {
                     JOptionPane.showMessageDialog(frame, msg[0], "提示", JOptionPane.WARNING_MESSAGE);

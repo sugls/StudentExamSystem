@@ -13,10 +13,16 @@ import java.io.IOException;
 import java.util.List;
 
 /**
+ * 生成试题xml文件
  * Created by Lsc on 2016/12/27.
  */
 public class buildExamXml {
 
+    /**
+     * 生成带有阶段号的试题xml文件
+     * @param filename 试题xml文件名
+     * @param stage 阶段号
+     */
     public static void createXmlFile(String filename, String stage) {
         //创建文件工厂对象
         DocumentFactory factory = new DocumentFactory();

@@ -3,13 +3,13 @@ package com.guigu.ses.DTO;
 import com.guigu.ses.Util.DBUtil;
 
 import java.sql.CallableStatement;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * 学生表 DTO，学生注册，登录等功能
  * Created by Lsc on 2016/12/27.
  */
 public class Students {
@@ -20,13 +20,21 @@ public class Students {
     private String sex;
     private String passwd;
 
-    private static final String reg_sno = "\\d{4,12}";
-    private static final String reg_pwd = "([a-z]|[A-z]|[0-9]){4,20}";
-    private static final String reg_class = "\\A\\p{Alpha}{1}\\d{0,4}";
+    private static final String reg_sno = "\\d{4,12}";  //学号正则
+    private static final String reg_pwd = "([a-z]|[A-z]|[0-9]){4,20}"; // 密码正则
+    private static final String reg_class = "\\A\\p{Alpha}{1}\\d{0,4}"; // 班级正则
 
     public Students() {
     }
 
+    /**
+     * 构造方法
+     * @param stuno 学号
+     * @param stuname 姓名
+     * @param stuclass 班级
+     * @param sex 性别
+     * @param passwd 密码
+     */
     public Students(int stuno, String stuname, String stuclass, String sex, String passwd) {
         this.stuno = stuno;
         this.stuname = stuname;
@@ -77,10 +85,9 @@ public class Students {
 
     /**
      * 登录验证
-     *
      * @param sno    学号
      * @param passwd 密码
-     * @return 长度为2的String数组result, result[0]表示登录状态，result[1]表是用户姓名
+     * @return 长度为2的String数组result, result[0]表示登录状态，result[1]表示用户姓名
      */
     public static String[] checkLogin(String sno, String passwd) {
         String result[] = new String[2];
@@ -127,10 +134,10 @@ public class Students {
     }
 
     /**
-     * 注册
+     * 学生注册功能
      * @param sno 学号
      * @param name 姓名
-     * @param sex 性别，值为 1或2
+     * @param sex 性别，值为 1代表性别男，2代表性别女
      * @param sclass 班级
      * @param passwd 密码
      * @return -1 表示学号重复 1 表示注册成功
@@ -165,8 +172,8 @@ public class Students {
     }
 
     /**
-     * 注册验证
-     * @param infos 注册信息
+     * 注册信息验证
+     * @param infos 注册表单信息
      * @return 验证信息
      */
     public static String checkRegist(String[] infos){
@@ -192,7 +199,5 @@ public class Students {
         return result;
 
     }
-
-
 
 }
