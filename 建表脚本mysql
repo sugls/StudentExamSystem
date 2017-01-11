@@ -1,0 +1,30 @@
+CREATE TABLE student
+(
+  stu_no     VARCHAR(12) PRIMARY KEY,
+  stu_name   VARCHAR(20) NOT NULL,
+  stu_sex    CHAR     NOT NULL,
+  stu_class  VARCHAR(5)  NOT NULL,
+  stu_passwd VARCHAR(20) NOT NULL
+);
+CREATE TABLE question
+(
+  que_no NUMERIC PRIMARY KEY,
+  que_note   VARCHAR(20) NOT NULL,
+  que_detail VARCHAR(1024),
+  que_choice VARCHAR(1024),
+  que_answer VARCHAR(6),
+  stage      NUMBER(1)
+);
+ALTER TABLE question
+  ADD stage CHAR(1);
+CREATE TABLE score
+(
+  stu_no NUMBER(12) REFERENCES student (stu_no),
+  stage  CHAR(1),
+  score  NUMBER(3),
+  CONSTRAINT score_stu_no_stage_pk PRIMARY KEY (stu_no, stage)
+);
+ALTER TABLE score
+  ADD score NUMBER(3);
+ALTER TABLE question MODIFY stage CHAR(1);
+
